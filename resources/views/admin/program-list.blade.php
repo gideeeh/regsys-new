@@ -16,7 +16,7 @@
         <h2 class="text-2xl font-semibold mb-4">Program Management</h2>
         <button @click="showModal = true" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">+ Add Program</button>
         
-        <!-- Modal -->
+        <!-- Add Program Modal -->
         <div x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
             <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto max-w-md w-full max-h-[80vh]">
                 <h3 class="text-lg font-bold mb-4">Add New Program</h3>
@@ -48,7 +48,7 @@
                         <select id="department" name="department" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                             <option value="">Select Department</option>
                             @foreach ($departments as $department)
-                                <option value="{{ $department->id }}">{{ $department->dept_name }}</option>
+                                <option value="{{ $department->dept_id }}">{{ $department->dept_name }}</option>
                             @endforeach
                         </select>
                     </div>

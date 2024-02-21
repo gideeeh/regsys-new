@@ -2,14 +2,13 @@
 @section('content')
 <div x-data="{ searchTerm: '{{ $searchTerm ?? '' }}' }">
     <div class="flex justify-between items-center h-10">
-        <a href="{{ route('enrollment-records') }}" class="font-semibold text-xl text-gray-800 leading-tight no-underline hover:underline">
+        <a href="{{ route('enrollment-records') }}" class="text-2xl font-semibold mb-4text-gray-800 leading-tight no-underline hover:underline">
             {{ __('Enrollment Records') }}
         </a>
         <x-search-form action="{{ route('enrollment-records') }}" placeholder="Search Enrollment" />
     </div>
 
     <div class="py-4">
-        
         <div class="mb-4 mt-4">
             {{ $enrollments->links() }}
         </div>
@@ -23,8 +22,9 @@
                         <th class="w-1/12 bg-blue-500 text-white p-2">Year Level</th>
                         <th class="w-1/12 bg-blue-500 text-white p-2">Academic Year</th>
                         <th class="w-1/12 bg-blue-500 text-white p-2">Term</th>
-                        <th class="w-1/12 bg-blue-500 text-white p-2">Continuing</th>
-                        <th class="w-2/12 bg-blue-500 text-white p-2">Actions</th>
+                        <th class="w-1/12 bg-blue-500 text-white p-2">Cont</th>
+                        <th class="w-1/12 bg-blue-500 text-white p-2">Status</th>
+                        <th class="w-1/12 bg-blue-500 text-white p-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,10 +37,12 @@
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->academic_year}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->term}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->is_Continuing}}</td>
+                        <td class="border-dashed border-t border-gray-200 p-2 py-4">{{Str::ucfirst($enrollment->status)}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">
-                            <div class="flex justify-start space-x-4">
-                                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
-                                <button @click.stop="deleteModal = true; selectedStudent = {{ $enrollment->enrollment_id }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition ease-in-out duration-150">Delete</button>
+                            <div class="flex flex-col space-y-2">
+                                <button class="bg-blue-500 text-white rounded hover:bg-blue-600">Update</button>
+                                <!-- <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button> -->
+                                <button @click.stop="deleteModal = true; selectedStudent = {{ $enrollment->enrollment_id }}" class="bg-red-500 text-white rounded hover:bg-red-600 transition ease-in-out duration-150">Delete</button>
                             </div>
                         </td>
                     </tr>

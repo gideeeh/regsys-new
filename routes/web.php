@@ -68,6 +68,8 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::delete('/student/student-records/delete_student/{student_id}', [StudentRecordsController::class, 'destroy'])->name('student-delete');
     Route::get('/student/student-records/edit/{student}', [StudentRecordsController::class, 'edit'])->name('student.edit');
     Route::patch('/student/student-records/edit/update/{student}', [StudentRecordsController::class, 'update_personal'])->name('student.update');
+    Route::get('/admin/students/get-students/', [StudentRecordsController::class, 'student_json'])->name('students.json');
+    Route::get('/admin/students/get-students/{student_id}', [StudentRecordsController::class, 'fetch_student_json'])->name('students.fetch');
 /* Faculty Records */
     Route::get('/admin/faculty-records', [FacultyRecordsController::class, 'index'])->name('faculty-records');
     Route::get('/admin/faculty-records/{faculty}', [FacultyRecordsController::class, 'show'])->name('faculty-records.show');
@@ -77,6 +79,7 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
 /* Enrollments */
     Route::get('/admin/enrollment-records', [EnrollmentsController::class, 'index'])->name('enrollment-records');
     Route::get('/admin/enrollment-records/{enrollment_id}', [EnrollmentsController::class, 'show'])->name('enrollment-records.show');
+    Route::get('/admin/enrollments/enroll', [EnrollmentsController::class, 'enroll'])->name('enrollments.enroll');
 /* Program Management */
     Route::get('/admin/functions/program-course-management/program_list', [ProgramController::class, 'index'])->name('program-list');
     /* Sub - Program Profile */

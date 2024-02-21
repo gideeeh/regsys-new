@@ -21,6 +21,7 @@ class Enrollment extends Model
         'enrollment_date',
         'scholarship_type',
         'is_Continuing',
+        'status',
     ];
 
     public function enrolledSubjects()

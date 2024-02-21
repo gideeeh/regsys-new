@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enrollment;
+use App\Models\Program;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class EnrollmentsController extends Controller
@@ -17,6 +19,7 @@ class EnrollmentsController extends Controller
                 'enrollments.year_level',
                 'enrollments.is_Continuing',
                 'enrollments.enrollment_date',
+                'enrollments.status',
                 'students.student_number',
                 'students.first_name', 
                 'students.middle_name', 
@@ -52,4 +55,15 @@ class EnrollmentsController extends Controller
         
         return view('admin.indiv-enrollment-record', ['enrollment' => $enrollmentRecord]);
     }
+
+    public function enroll()
+    {
+        $programs = Program::all();
+        $students = Student::all();
+        return view('admin.enroll-student',[
+            'students' => $students,
+            'programs' => $programs,
+        ]);
+    }
+    
 }

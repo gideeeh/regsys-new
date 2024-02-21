@@ -115,6 +115,35 @@ class StudentRecordsController extends Controller
         ]);
     }
 
+    public function student_json(Request $request)
+    {
+        $search = $request->get('q');
+
+        $students = Student::where('first_name','like','%'.$search.'%')
+                            ->orWhere('last_name','like','%'.$search.'%')
+                            ->orWhere('student_number','like','%'.$search.'%')
+                            ->get([
+                                'student_id as student_id',
+                                'first_name as first_name',
+                                'middle_name as middle_name',
+                                'last_name as last_name',
+                                'student_number as student_number',
+                                'personal_email as personal_email',
+                                'phone_number as phone_number',
+                            ]);
+        return response()->json($students);    
+    }
+
+    public function fetch_student_json($student_id)
+    {
+        $student = Student::findOrFail($student_id);
+        return response()->json([
+            'personal_email' => $student->personal_email,
+            'phone_number' => $student->phone_number,
+            'first_name' => $student->first_name,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
