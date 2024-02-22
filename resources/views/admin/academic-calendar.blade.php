@@ -32,63 +32,6 @@
             </form>
         </div>
     </div>
-    <div x-cloak x-show="showSetAcadYearTerm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
-        <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto max-w-md w-full max-h-[80vh]">
-            <h3 class="text-lg font-bold mb-4">Set School Year and Term</h3>
-            <form action="{{ route('acad-year-set') }}" method="POST" class="space-y-4">
-                @csrf
-                <div>
-                    <label for="acad_year" class="block text-sm font-medium text-gray-700">Academic Year:</label>
-                    <select id="acad_year" name="acad_year" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    @php
-                    $currentYear = date('Y');
-                    $endYear = $currentYear + 10;
-                    for ($year = $currentYear; $year < $endYear; $year++) {
-                        $acad_year = $year . '-' . ($year + 1);
-                        echo "<option value='{$acad_year}'>{$acad_year}</option>";
-                    }
-                    @endphp
-                    </select>                
-                </div>
-                <div>
-                    <label for="acad_year_start" class="block text-sm font-medium text-gray-700">Acad Year (Start):</label>
-                    <input type="date" name="acad_year_start" id="acad_year_start" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">           
-                </div>
-                <div>
-                    <label for="acad_year_end" class="block text-sm font-medium text-gray-700">Acad Year (End):</label>
-                    <input type="date" name="acad_year_end" id="acad_year_end" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">           
-                </div>
-                <div>
-                    <label for="term_1_start" class="block text-sm font-medium text-gray-700">Term 1 (Start):</label>
-                    <input type="date" name="term_1_start" id="term_1_start" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">           
-                </div>
-                <div>
-                    <label for="term_1_end" class="block text-sm font-medium text-gray-700">Term 1 (End):</label>
-                    <input type="date" name="term_1_end" id="term_1_end" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">           
-                </div>
-                <div>
-                    <label for="term_2_start" class="block text-sm font-medium text-gray-700">Term 2 (Start):</label>
-                    <input type="date" name="term_2_start" id="term_2_start" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">           
-                </div>
-                <div>
-                    <label for="term_2_end" class="block text-sm font-medium text-gray-700">Term 2 (End):</label>
-                    <input type="date" name="term_2_end" id="term_2_end" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">           
-                </div>
-                <div>
-                    <label for="term_3_start" class="block text-sm font-medium text-gray-700">Term 3 (Start):</label>
-                    <input type="date" name="term_3_start" id="term_3_start" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">           
-                </div>
-                <div>
-                    <label for="term_3_end" class="block text-sm font-medium text-gray-700">Term 3 (End):</label>
-                    <input type="date" name="term_3_end" id="term_3_end" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">           
-                </div>
-                <div class="flex justify-end space-x-4">
-                    <button type="button" @click="showSetAcadYearTerm = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Close</button>
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">Set Acad Year & Term</button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
 @endsection
 

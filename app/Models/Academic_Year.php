@@ -15,8 +15,6 @@ class Academic_Year extends Model
 
     protected $fillable = [ 
         'acad_year', 
-        'acad_year_start', 
-        'acad_year_end', 
         'term_1_start', 
         'term_1_end', 
         'term_2_start', 

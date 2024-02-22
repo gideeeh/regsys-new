@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('academic_years', function (Blueprint $table) {
             $table->id();
             $table->string('acad_year', 45);
-            $table->date('acad_year_start')->nullable();
-            $table->date('acad_year_end')->nullable();
             $table->date('term_1_start')->nullable();
             $table->date('term_1_end')->nullable();
             $table->date('term_2_start')->nullable();

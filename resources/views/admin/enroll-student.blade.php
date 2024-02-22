@@ -4,11 +4,12 @@
 
     <h1>Enroll Student</h1>
     <div>
+        <label for="stu_to_enroll">Student to enroll:</label>
         @if(isset($students))
-        <select id="stu_to_enroll" name="stu_to_enroll" x-model="stu_to_enroll" style="width: 100%;"></select>
+        <select id="stu_to_enroll" name="stu_to_enroll" x-model="stu_to_enroll" style="width: 50%;"></select>
         @endif
         <span>Select Academic Year</span>
-        <span>Term: </span>
+        <select>Term: </select>
     </div>
     <label for="enrollment_method">Enrollment Method:</label>
     <select name="enrollment_method" id="enrollment_method">
@@ -63,7 +64,7 @@
         // Initialize Select2 first
         $('#stu_to_enroll').select2({
             width: 'resolve',
-            placeholder: "Enter Student Name | Student Number",
+            placeholder: "Student Name or Student Number",
             allowClear: true,
             minimumInputLength: 1,
             ajax: {

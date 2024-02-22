@@ -9,7 +9,7 @@
             <x-search-form action="{{ route('subject-catalog') }}" placeholder="Search Subject" />
         </div>
         <!-- Add Subject Modal --> 
-        <div x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
+        <div c-cloak x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
             <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto max-w-md w-full max-h-[80vh]">
                 <h3 class="text-lg font-bold mb-4">Add New Program</h3>
                 <form action="{{ route('subject-catalog-new-subject') }}" method="POST" class="space-y-4">
