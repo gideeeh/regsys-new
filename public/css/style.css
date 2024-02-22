@@ -256,4 +256,7 @@ h3 {
     cursor: pointer;
 }
 
+#calendar {
+    min-height: 100vh; /* Adjust as necessary */
+  }
 [x-cloak] { display: none !important; }

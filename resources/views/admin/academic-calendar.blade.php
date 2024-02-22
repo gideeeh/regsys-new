@@ -4,20 +4,29 @@
     <a href="{{ route('academic-calendar') }}">
         <h2 class="text-2xl font-semibold mb-4">Academic Calendar</h2>
     </a>
-    <button @click="showModal = true"class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">+ Add Event</button>    
-    <button @click="showSetAcadYearTerm = true"class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition ease-in-out duration-150">Set Acad Year</button>    
+    <div class="flex date-picker justify-between mt-8">
+        <button @click="showModal = true" id="showModalButton" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">+ Add Event</button>    
+        <div>
+            <input type="date" id="jumpToDate" class="rounded">
+            <button id="jumpToDateBtn" class="bg-slate-500 text-white px-4 py-2 rounded hover:bg-slate-600 transition ease-in-out duration-150">Go</button>
+        </div>
+    </div>
     <div id='calendar' class="py-4"></div>
-    <div x-cloak x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
+    <!-- Add Calendar Event Modal -->
+    <div x-cloak x-show="showModal" id="addEventModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
         <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto max-w-md w-full max-h-[80vh]">
             <h3 class="text-lg font-bold mb-4">Add New Event</h3>
             <form method="POST" action="{{route('academic-calendar-add-event')}}"  id="addEventForm" class="space-y-4">
                 @csrf
+                <label for="eventTitle" class="block text-sm font-medium text-gray-700">Event Title</label>
                 <input type="text" id="eventTitle" placeholder="Event Title" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <label for="startTime" class="block text-sm font-medium text-gray-700">Start Date & Time</label>
                 <input type="datetime-local" id="startTime" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <label for="endTime" class="block text-sm font-medium text-gray-700">End Date & Time</label>
                 <input type="datetime-local" id="endTime" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                 <textarea id="eventComments" placeholder="Comments" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
                 <div class="flex justify-end space-x-4">
-                    <button type="button" @click="showModal = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Close</button>
+                    <button type="button" @click="showModal = false" class="modal-close-btn bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Close</button>
                     <button type="submit" id="submitBtn" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">Add Event</button>
                 </div>
             </form>
@@ -91,6 +100,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
+        dateClick: function(info) {
+            const dateTime = info.dateStr + 'T00:00';
+            document.getElementById('startTime').value = dateTime;
+            // Adjust the 'endTime' value as necessary, this is just an example
+            document.getElementById('endTime').value = dateTime;
+
+            // Show the modal
+            document.getElementById('addEventModal').style.display = 'flex'; // Make sure your modal is using flex
+        },
         events: JSON.parse('@json($events)').map(event => ({
             id: event.id, 
             title: event.title,
@@ -154,6 +172,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     calendar.render();
 
+    document.getElementById('jumpToDateBtn').addEventListener('click', function() {
+        var dateInput = document.getElementById('jumpToDate').value;
+        if (dateInput) {
+            calendar.gotoDate(dateInput); // Jump to the specified date
+        }
+    });
+    
     document.getElementById('addEventForm').addEventListener('submit', function(e) {
 
         var title = document.getElementById('eventTitle').value;
@@ -187,6 +212,19 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function() {
         document.getElementById('submitBtn').disabled = true;
         document.getElementById('submitBtn').innerText = 'Submitting...';
+    });
+
+    document.querySelectorAll('.modal-close-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            document.getElementById('addEventModal').style.display = 'none'; // Hide the modal
+        });
+    });
+
+    document.getElementById('showModalButton').addEventListener('click', function() {
+        document.getElementById('eventTitle').value = ''; 
+        document.getElementById('startTime').value = ''; 
+        document.getElementById('endTime').value = '';
+        document.getElementById('eventComments').value = '';
     });
 });
 </script>
