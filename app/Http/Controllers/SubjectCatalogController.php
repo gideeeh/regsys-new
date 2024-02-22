@@ -59,10 +59,44 @@ class SubjectCatalogController extends Controller
         $subject->subject_description = $request->subject_description;
         $subject->units_lec = $request->units_lec;
         $subject->units_lab = $request->units_lab;
-        $subject->prerequisite1 = $request->prereq1;
-        $subject->prerequisite2 = $request->prereq2;
+        $subject->prerequisite_1 = $request->prereq1;
+        $subject->prerequisite_2 = $request->prereq2;
         $subject->save();
     
         return redirect()->back()->with('success', 'Program added successfully!');
+    }
+
+    public function delete($id)
+    {
+        $subject = Subject::find($id);
+        if($subject)
+        {
+            $subject->delete();
+            return redirect()->back()->with('success','Subject has been successfully deleted.');
+        }
+        else {
+            return redirect()->back()->with('error','Subject not found');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $subject = Subject::find($id);
+        if($subject)
+        {
+            $subject->subject_code = $request->subject_code;
+            $subject->subject_name = $request->subject_name;
+            $subject->subject_description = $request->subject_description;
+            $subject->units_lec = $request->units_lec;
+            $subject->units_lab = $request->units_lab;
+            $subject->prerequisite_1 = $request->prereqUpdate1;
+            $subject->prerequisite_2 = $request->prereqUpdate2;
+            $subject->save();
+
+            return redirect()->back()->with('success', 'Subject updated successfully!');
+        }
+        else {
+            return redirect()->back()->with('error', 'Subject not found.');
+        }
     }
 }

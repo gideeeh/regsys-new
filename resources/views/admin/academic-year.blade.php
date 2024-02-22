@@ -130,21 +130,21 @@
 
     <!-- Delete Modal -->
     <div x-cloak x-show="showDeleteAcadYearTerm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
-            <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto max-w-md w-full">
-                <h3 class="text-lg font-bold mb-4">Confirm Deletion</h3>
-                <p>Are you sure you want to delete this record?</p>
-                <div class="flex justify-end mt-4">
-                <div class="flex items-center">
-                    <button @click="showDeleteAcadYearTerm = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150 mr-2">Cancel</button>
-                    <form :action="'/admin/functions/program-course-management/academic_year/delete_acad_year/' + selectedAcadYearId" class="pt-4" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition ease-in-out duration-150">Delete</button>
-                    </form>
-                </div>
-                </div>
+        <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto max-w-md w-full">
+            <h3 class="text-lg font-bold mb-4">Confirm Deletion</h3>
+            <p>Are you sure you want to delete this record?</p>
+            <div class="flex justify-end mt-4">
+            <div class="flex items-center">
+                <button @click="showDeleteAcadYearTerm = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150 mr-2">Cancel</button>
+                <form :action="'/admin/functions/program-course-management/academic_year/delete_acad_year/' + selectedAcadYearId" class="pt-4" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition ease-in-out duration-150">Delete</button>
+                </form>
+            </div>
             </div>
         </div>
+    </div>
 
     <!-- Update Academic Year Modal -->
     <div x-cloak x-show="showUpdateAcadYearTerm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">

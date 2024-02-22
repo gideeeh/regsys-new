@@ -94,6 +94,8 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
 /* Subject Catalog */
     Route::get('/admin/functions/program-course-management/subject_catalog', [SubjectCatalogController::class, 'index'])->name('subject-catalog');
     Route::post('/admin/functions/program-course-management/subject_catalog/save-subject', [SubjectCatalogController::class, 'store'])->name('subject-catalog-new-subject');
+    Route::delete('/admin/functions/program-course-management/subject_catalog/delete/{id}',[SubjectCatalogController::class,'delete'])->name('subject-catalog.delete');
+    Route::patch('/admin/functions/program-course-management/subject_catalog/update/{id}',[SubjectCatalogController::class,'update'])->name('subject-catalog.update');
 /* Academic Calendar */
     Route::get('/admin/functions/program-course-management/academic_calendar', [AcademicCalendarController::class, 'index'])->name('academic-calendar');
     Route::post('/admin/functions/program-course-management/academic_calendar/add-event', [AcademicCalendarController::class, 'store'])->name('academic-calendar-add-event');
