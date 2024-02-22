@@ -78,14 +78,14 @@
                     <tbody>
                         @foreach ($subjects as $subject)
                         <tr class="cursor-pointer">
-                            <td class="border-dashed border-t border-gray-200 p-2">{{ $subject->subject_code }}</td>
-                            <td class="border-dashed border-t border-gray-200 p-2">{{ $subject->subject_name }}</td>
-                            <td class="border-dashed border-t border-gray-200 p-2">{{ $subject->units_lec }}</td>
-                            <td class="border-dashed border-t border-gray-200 p-2">{{ $subject->units_lab }}</td>
-                            <td class="border-dashed border-t border-gray-200 p-2">{{ $subject->units_lec + $subject->units_lab }}</td>
-                            <td class="border-dashed border-t border-gray-200 p-2">{{ $subject->prereq1 ?? '-'}}</td>
-                            <td class="border-dashed border-t border-gray-200 p-2">{{ $subject->prereq2 ?? '-'}}</td>
-                            <td class="border-dashed border-t border-gray-200 p-2">
+                            <td class="border-dashed border-t border-gray-300 p-2"><strong>{{ $subject->subject_code }}</strong></td>
+                            <td class="border-dashed border-t border-gray-300 p-2">{{ $subject->subject_name }}</td>
+                            <td class="border-dashed border-t border-gray-300 p-2">{{ $subject->units_lec }}</td>
+                            <td class="border-dashed border-t border-gray-300 p-2">{{ $subject->units_lab }}</td>
+                            <td class="border-dashed border-t border-gray-300 p-2">{{ $subject->units_lec + $subject->units_lab }}</td>
+                            <td class="border-dashed border-t border-gray-300 p-2">{{ $subject->prereq1 ?? '-'}}</td>
+                            <td class="border-dashed border-t border-gray-300 p-2">{{ $subject->prereq2 ?? '-'}}</td>
+                            <td class="border-dashed border-t border-gray-300 p-2">
                                 <div class="flex justify-end space-x-4">
                                     <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
                                     <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>

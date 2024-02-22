@@ -12,6 +12,7 @@ class AcademicCalendarController extends Controller
     {
         $events = Calendar_Event::all()->map(function ($event) {
             return [
+                'id' => $event->id,
                 'title' => $event->title,
                 'comments' => $event->comments,
                 'start' => $event->start_time->format('Y-m-d H:i:s'), // Adjust format as necessary
@@ -28,7 +29,7 @@ class AcademicCalendarController extends Controller
             'title' => 'required|string',
             'start' => 'required|date',
             'end' => 'required|date',
-            'comments' => 'sometimes|string', 
+            'comments' => 'required|string', 
         ]);
     
         $event = Calendar_Event::create([
@@ -38,8 +39,19 @@ class AcademicCalendarController extends Controller
             'comments' => $validated['comments'],
         ]);
     
-        return response()->json($event, 200);
+        // return response()->json($event, 200);
+        return redirect()->back()->with('success', 'Event added successfully');
     }
-    
+
+    public function destroy($id)
+    {
+        $event = Calendar_Event::find($id);
+        if ($event) {
+            $event->delete();
+            return response()->json(['message' => 'Event deleted successfully'], 200);
+        } else {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+    }
 }
 

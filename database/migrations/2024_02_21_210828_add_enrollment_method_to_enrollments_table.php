@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('enrollments', function (Blueprint $table) {
             //
+            $table->enum('enrollment_method',['continuing','new','transferee','shiftee'])->default('continuing');
         });
     }
 

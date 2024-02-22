@@ -98,7 +98,7 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/admin/functions/program-course-management/academic_calendar', [AcademicCalendarController::class, 'index'])->name('academic-calendar');
     Route::post('/admin/functions/program-course-management/academic_calendar/add-event', [AcademicCalendarController::class, 'store'])->name('academic-calendar-add-event');
     Route::post('admin/functions/program-course-management/academic_calendar/set-acad-year',[AcademicYearController::class, 'store'])->name('acad-year-set');
-
+    Route::delete('/admin/functions/program-course-management/academic_calendar/delete-event/{id}', [AcademicCalendarController::class, 'destroy'])->name('academic-calendar-delete-event');
 });
 
 require __DIR__.'/auth.php';

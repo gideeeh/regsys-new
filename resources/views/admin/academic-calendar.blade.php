@@ -1,6 +1,6 @@
 @extends('admin.functions')
 @section('content')
-<div x-data="{ showModal: false, showSetAcadYearTerm: false }" @close-modal.window="{showModal = false, showSetAcadYearTerm = false }">
+<div x-data="{ showModal: false, showSetAcadYearTerm: false }" @keydown.escape.window="showModal = false; showSetAcadYearTerm = false">
     <a href="{{ route('academic-calendar') }}">
         <h2 class="text-2xl font-semibold mb-4">Academic Calendar</h2>
     </a>
@@ -10,14 +10,15 @@
     <div x-cloak x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
         <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto max-w-md w-full max-h-[80vh]">
             <h3 class="text-lg font-bold mb-4">Add New Event</h3>
-            <form id="addEventForm" class="space-y-4">
+            <form method="POST" action="{{route('academic-calendar-add-event')}}"  id="addEventForm" class="space-y-4">
+                @csrf
                 <input type="text" id="eventTitle" placeholder="Event Title" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                 <input type="datetime-local" id="startTime" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                 <input type="datetime-local" id="endTime" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                <textarea id="eventComments" placeholder="Comments" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+                <textarea id="eventComments" placeholder="Comments" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
                 <div class="flex justify-end space-x-4">
                     <button type="button" @click="showModal = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Close</button>
-                    <button type="submit" @click="showModal = false" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">Add Event</button>
+                    <button type="submit" id="submitBtn" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">Add Event</button>
                 </div>
             </form>
         </div>
@@ -90,6 +91,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
+        events: JSON.parse('@json($events)').map(event => ({
+            id: event.id, 
+            title: event.title,
+            start: event.startTime,
+            end: event.endTime,
+            comments: event.comments,
+        })),
         events: JSON.parse('@json($events)'),
         eventTimeFormat: {
             hour: '2-digit',
@@ -129,12 +137,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 comments: info.event.extendedProps.comments
             };
             document.dispatchEvent(new CustomEvent('open-event-modal', { detail: eventDetail }));
+        },
+        eventClick: function(info) {
+            if (confirm("Are you sure you want to delete this event?")) {
+                axios.delete(`/admin/functions/program-course-management/academic_calendar/delete-event/${info.event.id}`)
+                    .then(function(response) {
+                        info.event.remove(); // Remove the event from the calendar
+                        alert('Event deleted successfully');
+                    })
+                    .catch(function(error) {
+                        console.error('Error deleting event:', error);
+                        alert('An error occurred while deleting the event.');
+                    });
+            }
         }
     });
     calendar.render();
 
     document.getElementById('addEventForm').addEventListener('submit', function(e) {
-        e.preventDefault();
 
         var title = document.getElementById('eventTitle').value;
         var start = document.getElementById('startTime').value;
@@ -161,6 +181,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(function (error) {
             console.log(error);
         });
+    });
+
+    const form = document.getElementById('addEventForm');
+    form.addEventListener('submit', function() {
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').innerText = 'Submitting...';
     });
 });
 </script>
