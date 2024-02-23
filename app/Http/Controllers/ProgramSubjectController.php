@@ -34,14 +34,25 @@ class ProgramSubjectController extends Controller
         $subjectsToRemove = array_diff($currentSubjectIds, $submittedSubjectIds);
     
         foreach ($subjectsToAdd as $subjectId) {
-            Program_Subject::create([
-                'program_id' => $programId,
-                'subject_id' => $subjectId,
-                'year' => $year,
-                'term' => $term,
-            ]);
+            try {
+                Program_Subject::create([
+                    'program_id' => $programId,
+                    'subject_id' => $subjectId,
+                    'year' => $year,
+                    'term' => $term,
+                ]);
+            } catch (\Illuminate\Database\QueryException $e) {
+                // Check if the error code is for a duplicate entry
+                if ($e->errorInfo[1] == 1062) {
+                    return back()->with('error', 'This subject is already assigned to the program for the specified term and year.');
+                } else {
+                    // Log or handle other database errors
+                    Log::error('Database error: ' . $e->getMessage());
+                    return back()->with('error', 'An unexpected error occurred. Please try again.');
+                }
+            }
         }
-
+    
         if (!empty($subjectsToRemove)) {
             Program_Subject::where('program_id', $programId)
                            ->where('year', $year)

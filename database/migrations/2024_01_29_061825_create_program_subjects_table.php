@@ -21,6 +21,8 @@ return new class extends Migration
 
             $table->foreign('program_id')->references('program_id')->on('programs')->onDelete('set null');
             $table->foreign('subject_id')->references('subject_id')->on('subjects')->onDelete('set null');
+
+            $table->unique(['program_id', 'subject_id'], 'program_subject_unique');
         });
     }
 
