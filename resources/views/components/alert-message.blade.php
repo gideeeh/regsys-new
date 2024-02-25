@@ -11,7 +11,17 @@
     style="display: none;"
     class="fixed top-0 left-1/2 transform -translate-x-1/2 mt-4 z-50"
 >
-    @if(session('success'))
+    @if(session('status') == 'password-updated')
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+            <strong class="font-bold">Success!</strong>
+            <span class="block sm:inline">{{ __('Your password has been updated.') }}</span>
+        </div>
+    @elseif(session('status') == 'profile-updated')
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+            <strong class="font-bold">Success!</strong>
+            <span class="block sm:inline">{{ __('Your profile has been updated.') }}</span>
+        </div>
+    @elseif(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
             <strong class="font-bold">Success!</strong>
             <span class="block sm:inline">{{ session('success') }}</span>

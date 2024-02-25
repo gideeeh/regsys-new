@@ -20,8 +20,8 @@ class Enrollment extends Model
         'batch',
         'enrollment_date',
         'scholarship_type',
-        'is_Continuing',
         'status',
+        'enrollment_method',
     ];
 
     public function enrolledSubjects()

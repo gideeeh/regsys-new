@@ -127,6 +127,7 @@ class StudentRecordsController extends Controller
                                 'first_name as first_name',
                                 'middle_name as middle_name',
                                 'last_name as last_name',
+                                'suffix as suffix',
                                 'student_number as student_number',
                                 'personal_email as personal_email',
                                 'phone_number as phone_number',
@@ -138,9 +139,13 @@ class StudentRecordsController extends Controller
     {
         $student = Student::findOrFail($student_id);
         return response()->json([
+            'student_id' => $student->student_id,
+            'student_number' => $student->student_number,
             'personal_email' => $student->personal_email,
             'phone_number' => $student->phone_number,
             'first_name' => $student->first_name,
+            'middle_name' => $student->middle_name,
+            'last_name' => $student->last_name,
         ]);
     }
 

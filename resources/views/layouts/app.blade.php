@@ -28,6 +28,7 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     </head>
     <body class="font-sans antialiased bg-gray-100">
+        <x-alert-message />
         <div class="min-h-screen bg-gray-100">
         @can('isAdmin')
             <!-- Include Admin Navigation -->

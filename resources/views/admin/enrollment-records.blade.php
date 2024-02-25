@@ -22,7 +22,7 @@
                         <th class="w-1/12 bg-blue-500 text-white p-2">Year Level</th>
                         <th class="w-1/12 bg-blue-500 text-white p-2">Academic Year</th>
                         <th class="w-1/12 bg-blue-500 text-white p-2">Term</th>
-                        <th class="w-1/12 bg-blue-500 text-white p-2">Cont</th>
+                        <th class="w-1/12 bg-blue-500 text-white p-2">Method</th>
                         <th class="w-1/12 bg-blue-500 text-white p-2">Status</th>
                         <th class="w-1/12 bg-blue-500 text-white p-2">Actions</th>
                     </tr>
@@ -30,13 +30,13 @@
                 <tbody>
                 @foreach ($enrollments as $enrollment)
                     <tr class="border-b hover:bg-gray-100 cursor-pointer" >
-                        <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->student_number}}</td>
+                        <td class="border-dashed border-t border-gray-200 p-2 py-4"><strong>{{$enrollment->student_number}}</strong></td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->first_name}} {{ substr($enrollment->middle_name, 0, 1)}}. {{$enrollment->last_name.' '.$enrollment->suffix}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->program_code}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->year_level}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->academic_year}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->term}}</td>
-                        <td class="border-dashed border-t border-gray-200 p-2 py-4">{{$enrollment->is_Continuing}}</td>
+                        <td class="border-dashed border-t border-gray-200 p-2 py-4">{{Str::ucfirst($enrollment->enrollment_method)}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">{{Str::ucfirst($enrollment->status)}}</td>
                         <td class="border-dashed border-t border-gray-200 p-2 py-4">
                             <div class="flex flex-col space-y-2">

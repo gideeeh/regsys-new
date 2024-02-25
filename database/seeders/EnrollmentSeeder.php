@@ -20,6 +20,8 @@ class EnrollmentSeeder extends Seeder
 
         foreach($csv->getRecords() as $offset=>$record)
         {
+            $status = empty($record['status']) ? 'pending' : $record['status'];
+            $enrollment_method = empty($record['enrollment_method']) ? 'continuing' : $record['enrollment_method'];
             Enrollment::create([
                 'student_id' => $record['student_id'],
                 'program_id' => $record['program_id'],
@@ -29,7 +31,8 @@ class EnrollmentSeeder extends Seeder
                 'batch' => $record['batch'] ?: null,
                 'enrollment_date' => $record['enrollment_date'] ?: now(),
                 'scholarship_type' => $record['scholarship_type'],
-                'is_Continuing' => $record['is_Continuing'],
+                'status' => $status,
+                'enrollment_method' => $enrollment_method,
             ]);
         }
     }

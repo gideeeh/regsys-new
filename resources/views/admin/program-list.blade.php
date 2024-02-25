@@ -76,7 +76,7 @@
                             <th class="bg-blue-500 text-white p-2">Department</th>
                             <th class="bg-blue-500 text-white p-2">Coordinator</th>
                             <th class="bg-blue-500 text-white p-2">Total Units</th>
-                            <th class="bg-blue-500 text-white p-2">Actions</th>
+                            <th class="bg-blue-500 text-white p-2 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,7 +87,7 @@
                             <td class="border-dashed border-t border-gray-200 p-2">{{ $program->degree_type }}</td>
                             <td class="border-dashed border-t border-gray-200 p-2">{{ $program->department->dept_name ?? '-' }}</td>
                             <td class="border-dashed border-t border-gray-200 p-2">{{ $program->program_coordinator ?? '-'}}</td>
-                            <td class="border-dashed border-t border-gray-200 p-2">{{ $program->total_units }}</td>
+                            <td class="border-dashed border-t border-gray-200 p-2">{{ $program->total_units ?? '-'}}</td>
                             <td class="border-dashed border-t border-gray-200 p-2">
                                 <div class="flex justify-end space-x-4">
                                     <button 
@@ -97,7 +97,7 @@
                                                 selectedProgramName = '{{ $program->program_name }}'; 
                                                 selectedProgramDesc = '{{ $program->program_desc }}';
                                                 selectedDegreeType = '{{ $program->degree_type }}';
-                                                selectedDepartment = '{{ $program->department->dept_id }}';
+                                                selectedDepartment = '{{ $program->dept_id }}';
                                                 selectedProgramCoordinator = '{{ $program->program_coordinator }}';
                                                 selectedTotalUnits = {{ $program->total_units }};" 
                                         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition ease-in-out duration-150">Update</button>

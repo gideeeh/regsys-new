@@ -5,12 +5,14 @@ use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CourseListingsController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EnrolledSubjectsController;
 use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\FacultyRecordsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProgramSubjectController;
 use App\Http\Controllers\RegistrarFunctionsController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentNoteController;
 use App\Http\Controllers\StudentRecordsController;
 use App\Http\Controllers\SubjectCatalogController;
@@ -68,8 +70,6 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::delete('/student/student-records/delete_student/{student_id}', [StudentRecordsController::class, 'destroy'])->name('student-delete');
     Route::get('/student/student-records/edit/{student}', [StudentRecordsController::class, 'edit'])->name('student.edit');
     Route::patch('/student/student-records/edit/update/{student}', [StudentRecordsController::class, 'update_personal'])->name('student.update');
-    Route::get('/admin/students/get-students/', [StudentRecordsController::class, 'student_json'])->name('students.json');
-    Route::get('/admin/students/get-students/{student_id}', [StudentRecordsController::class, 'fetch_student_json'])->name('students.fetch');
 /* Faculty Records */
     Route::get('/admin/faculty-records', [FacultyRecordsController::class, 'index'])->name('faculty-records');
     Route::get('/admin/faculty-records/{faculty}', [FacultyRecordsController::class, 'show'])->name('faculty-records.show');
@@ -80,12 +80,16 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/admin/enrollment-records', [EnrollmentsController::class, 'index'])->name('enrollment-records');
     Route::get('/admin/enrollment-records/{enrollment_id}', [EnrollmentsController::class, 'show'])->name('enrollment-records.show');
     Route::get('/admin/enrollments/enroll', [EnrollmentsController::class, 'enroll'])->name('enrollments.enroll');
+    Route::post('/admin/enrollments/enroll/enroll_student',[EnrollmentsController::class, 'store'])->name('enrollments.store');
+/* Enroll Subjects */
+    Route::post('/admin/enrollments/enroll/enroll_subjects/{enrollment_id}',[EnrolledSubjectsController::class, 'store'])->name('enroll.subjects');
+
 /* Program Management */
     Route::get('/admin/functions/program-course-management/program_list', [ProgramController::class, 'index'])->name('program-list');
+    Route::get('/admin/functions/get-program-subjects/', [ProgramSubjectController::class, 'program_subjects_json'])->name('program-subjects.json');
     /* Sub - Program Profile */
     Route::get('/admin/functions/program-course-management/program_list/{program_id}', [ProgramController::class, 'show'])->name('program-list.show');
     Route::get('/admin/functions/program-course-management/program_list/{program_id}/assign_subject', [SubjectController::class, 'search'])->name('program-lists-subjects.search');
-    Route::get('/admin/functions/get-subjects', [SubjectController::class, 'search'])->name('gimme-subjects');
     Route::get('/program/{program_id}/subjects/{year}/{term}', [ProgramSubjectController::class, 'fetchSubjects'])->name('fetch.subjects');
     Route::post('/admin/functions/program-course-management/program_list/save-program', [ProgramController::class, 'store'])->name('program-lists-new-program');    
     Route::post('/admin/functions/program-course-management/program_list/{program_id}/save-assign_subject', [ProgramSubjectController::class, 'store'])->name('program-subject.save');
@@ -106,6 +110,14 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::post('/admin/functions/program-course-management/academic_year/add_acad_year',[AcademicYearController::class, 'store'])->name('academic-year.store');
     Route::patch('/admin/functions/program-course-management/academic_year/update_acad_year/{id}',[AcademicYearController::class, 'update'])->name('academic-year.update');
     Route::delete('/admin/functions/program-course-management/academic_year/delete_acad_year/{id}',[AcademicYearController::class, 'destroy'])->name('academic-year.delete');
+/* Class Schedules */
+    Route::get('/admin/functions/program-course-management/sections',[SectionController::class, 'index'])->name('sections');
+
+/* Local APIs */
+    Route::get('/admin/students/get-students/', [StudentRecordsController::class, 'student_json'])->name('students.json');
+    Route::get('/admin/students/get-students/{student_id}', [StudentRecordsController::class, 'fetch_student_json'])->name('students.fetch');
+    Route::get('/admin/functions/get-subjects', [SubjectController::class, 'search'])->name('gimme-subjects');
+    Route::get('/admin/functions/get-subjects/{subject_id}', [SubjectCatalogController::class, 'fetch_subject'])->name('subject.fetch');
 });
 
 require __DIR__.'/auth.php';

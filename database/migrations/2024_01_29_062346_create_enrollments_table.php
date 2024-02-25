@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('year_level', 45);
             $table->string('batch', 45)->nullable();
             $table->date('enrollment_date');
-            $table->string('scholarship_type', 45)->nullable()->default('regular');
-            $table->boolean('is_Continuing')->nullable();
+            $table->enum('scholarship_type', ['none', 'academic', 'working', 'government'])->nullable()->default('none');
+            $table->enum('status', ['pending', 'cancelled', 'rejected', 'success'])->nullable()->default('pending');
+            $table->enum('enrollment_method',['continuing','new','transferee','shiftee'])->nullable()->default('continuing');
             $table->timestamps();
 
             $table->foreign('student_id')->references('student_id')->on('students')->onDelete('set null');

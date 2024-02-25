@@ -83,7 +83,7 @@
                     </thead>
                     <tbody>
                         @foreach ($subjects as $subject)
-                        <tr class="cursor-pointer">
+                        <tr class="border-b hover:bg-gray-100 cursor-pointer">
                             <td class="border-dashed border-t border-gray-300 p-2"><strong>{{ $subject->subject_code }}</strong></td>
                             <td class="border-dashed border-t border-gray-300 p-2">{{ $subject->subject_name }}</td>
                             <td class="border-dashed border-t border-gray-300 p-2">{{ $subject->units_lec }}</td>

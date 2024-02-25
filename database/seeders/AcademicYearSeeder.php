@@ -22,8 +22,12 @@ class AcademicYearSeeder extends Seeder
         {
             Academic_Year::create([
                 'acad_year' => $record['acad_year'],
-                'acad_year_start' => $record['acad_year_start'],
-                'acad_year_end' => $record['acad_year_end'],
+                'term_1_start' => $record['term_1_start'],
+                'term_1_end' => $record['term_1_end'],
+                'term_2_start' => $record['term_2_start'],
+                'term_2_end' => $record['term_2_end'],
+                'term_3_start' => $record['term_3_start'],
+                'term_3_end' => $record['term_3_end'],
             ]);
         }
     }

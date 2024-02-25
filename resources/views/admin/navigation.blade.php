@@ -59,6 +59,8 @@
                                 'program-list',
                                 'subject-catalog',
                                 'academic-calendar',
+                                'academic-year',
+                                'sections',
                                 'program-list.show',
                                 ])">
                             {{ __('Functions') }}

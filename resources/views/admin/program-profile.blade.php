@@ -20,7 +20,7 @@
         }
     }">
     <x-alert-message />
-    <h3 class="flex w-full justify-center bg-sky-950 px-4 rounded-md text-white mb-6">Curriculum Details</h3>
+    <h3 class="flex w-full justify-center bg-sky-950 px-4 rounded-md text-white mb-6 border-b-4 border-amber-300">Curriculum Details</h3>
     <h1>{{$program->program_name}}</h1>
     <span class="py-8"><em>{{ trim($program->program_desc) ? $program->program_desc : 'No Description' }}</em></span>
     <div class="flex py-4 flex-col">
@@ -115,10 +115,10 @@
                 </tbody>
             </table>
             <div class="flex px-8 py-2 bg-gray-300 text-sm">
-                        <span class="w-4/12"><strong>Total Units(Lec):</strong> {{$totalsByYearTerm[$year][$term]['lec'] ?? '0'}}</span>
-                        <span class="w-4/12"><strong>Total Units(Lab):</strong> {{$totalsByYearTerm[$year][$term]['lab'] ?? '0'}}</span>
-                        <span class="w-4/12"><strong>Total Units:</strong> {{$totalsByYearTerm[$year][$term]['total'] ?? '0' }}</span>
-                    </div>
+                <span class="w-4/12"><strong>Total Units(Lec):</strong> {{$totalsByYearTerm[$year][$term]['lec'] ?? '0'}}</span>
+                <span class="w-4/12"><strong>Total Units(Lab):</strong> {{$totalsByYearTerm[$year][$term]['lab'] ?? '0'}}</span>
+                <span class="w-4/12"><strong>Total Units:</strong> {{$totalsByYearTerm[$year][$term]['total'] ?? '0' }}</span>
+            </div>
             @else
             <span class="px-3">No subjects for this program for this year and term.</span>
             @endif
@@ -134,7 +134,7 @@
                 <input type="hidden" name="year" x-model="currentYear">
                 <input type="hidden" name="term" x-model="currentTerm">
                 <div>
-                    <select id="assign_subject" name="subject_ids[]" multiple="multiple" x-model="selectedSubjects" style="width: 100%;">
+                    <select id="assign_subject" name="subject_ids[]" multiple="multiple" x-model="selectedSubjects" style="width: 100%;" autofocus>
                         @foreach ($subjects as $subject)
                             <option value="{{ $subject->subject_id }}">{{ $subject->subject_name }}</option>
                         @endforeach

@@ -99,4 +99,20 @@ class SubjectCatalogController extends Controller
             return redirect()->back()->with('error', 'Subject not found.');
         }
     }
+
+    public function fetch_subject($subject_id)
+    {
+        $subject = Subject::findOrFail($subject_id);
+        return response()->json([
+            'subject' => $subject->subject_id,
+            'subject_name' => $subject->subject_name,
+            'subject_code' => $subject->subject_code,
+            'subject_description' => $subject->subject_description,
+            'units_lec' => $subject->units_lec,
+            'units_lab' => $subject->units_lab,
+            'prerequisite_1' => $subject->prerequisite_1,
+            'prerequisite_2' => $subject->prerequisite_2,
+            'prerequisite_3' => $subject->prerequisite_3,
+        ]);
+    }
 }

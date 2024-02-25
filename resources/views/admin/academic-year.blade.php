@@ -38,26 +38,26 @@
                 <div>
                     <span class="font-semibold text-sm">Acad Year: </span>
                     <h2 class="text-sky-800">{{ $acad_year->acad_year }}</h2>
-                    <p><strong>Date Start:</strong> <span>{{ $acad_year->term_1_start }}</span></p>
-                    <p><strong>Date End:</strong> <span>{{ $acad_year->term_3_end ?? 'End date not set' }}</span></p>
+                    <p><strong class="text-slate-600">Date Start:</strong> <span>{{ $acad_year->term_1_start ? \Carbon\Carbon::parse($acad_year->term_1_start)->format('M j, Y') : 'Start date not set' }}</span></p>
+                    <p><strong class="text-red-600">Date End:</strong> <span>{{ $acad_year->term_3_end ? \Carbon\Carbon::parse($acad_year->term_3_end)->format('M j, Y') : 'End date not set' }}</span></p>
                 </div>
             </div>
             
             <div class="border-t-4 border-sky-400 py-2">
                 <div class="pb-4">
                     <h3 class="text-lg">Term 1:</h3>
-                    <p><strong>Start: </strong>{{ $acad_year->term_1_start }}</p>
-                    <p><strong>End: </strong>{{ $acad_year->term_1_end }}</p>
+                    <p><strong class="text-slate-600">Start: </strong>{{ $acad_year->term_1_start ? \Carbon\Carbon::parse($acad_year->term_1_start)->format('M j, Y') : 'Start date not set' }}</p>
+                    <p><strong class="text-red-600">End: </strong>{{ $acad_year->term_1_end ? \Carbon\Carbon::parse($acad_year->term_1_end)->format('M j, Y') : 'End date not set' }}</p>
                 </div>
                 <div class="border-dotted border-t-2 border-slate-400 py-2">
                     <h3 class="text-lg">Term 2:</h3>
-                    <p><strong>Start: </strong>{{ $acad_year->term_2_start }}</p>
-                    <p><strong>End: </strong>{{ $acad_year->term_2_end }}</p>
+                    <p><strong class="text-slate-600">Start: </strong>{{ $acad_year->term_2_start ? \Carbon\Carbon::parse($acad_year->term_2_start)->format('M j, Y') : 'Start date not set' }}</p>
+                    <p><strong class="text-red-600">End: </strong>{{ $acad_year->term_2_end ? \Carbon\Carbon::parse($acad_year->term_2_end)->format('M j, Y') : 'End date not set' }}</p>
                 </div>
                 <div class="border-dotted border-t-2 border-slate-400 py-2">
                     <h3 class="text-lg">Term 3:</h3>
-                    <p><strong>Start: </strong>{{ $acad_year->term_3_start }}</p>
-                    <p><strong>End: </strong>{{ $acad_year->term_3_end }}</p>
+                    <p><strong class="text-slate-600">Start: </strong>{{ $acad_year->term_3_start ? \Carbon\Carbon::parse($acad_year->term_3_start)->format('M j, Y') : 'Start date not set' }}</p>
+                    <p><strong class="text-red-600">End: </strong>{{ $acad_year->term_3_end ? \Carbon\Carbon::parse($acad_year->term_3_end)->format('M j, Y') : 'End date not set' }}</p>
                 </div>
             </div>
             <span @click="showUpdateAcadYearTerm = true; selectedAcadYear={{$acad_year->acad_year}}; selectedAcadYearId = {{ $acad_year->id }}; setSelectedAcadYear('{{ $acad_year->acad_year }}'); setSelectedAcadYearId({{ $acad_year->id }})" class="underline text-gray-500 text-xs pb-1.5 hover:text-blue-600 cursor-pointer flex justify-end">Manage</span>
