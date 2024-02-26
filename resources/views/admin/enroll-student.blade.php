@@ -22,6 +22,7 @@
             <div class="flex items-center">
                 <label for="term" class="block text-md font-semibold text-gray-700 mr-2">Term:</label>
                 <select id="term" name="term" class="text-md w-1/4 border-gray-300 rounded-md shadow-sm" placeholder="Select Term" required>
+                    <option value="{{$activeTerm}}" hidden>{{$activeTerm}}</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

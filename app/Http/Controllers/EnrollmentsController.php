@@ -69,10 +69,12 @@ class EnrollmentsController extends Controller
 
     public function enroll()
     {
-        $activeAcadYear = $this->academicYearService->determineActiveAcademicYear();
-        if (!$activeAcadYear) {
+        $activeAcadYearAndTerm  = $this->academicYearService->determineActiveAcademicYearAndTerm();
+        if (!$activeAcadYearAndTerm) {
             return redirect()->back()->with('error', 'No active academic year found.');
         }
+        $activeAcadYear = $activeAcadYearAndTerm['activeAcadYear'];
+        $activeTerm = $activeAcadYearAndTerm['activeTerm'];
         session(['active_academic_year' => $activeAcadYear->id]);
         $programs = Program::all();
         $subjects = Subject::all();
@@ -84,6 +86,7 @@ class EnrollmentsController extends Controller
             'subjects' => $subjects,
             'acad_years' => $acad_years,
             'activeAcadYear' => $activeAcadYear,
+            'activeTerm' => $activeTerm,
         ]);
     }
 

@@ -19,16 +19,28 @@ class SectionController extends Controller
     public function index()
     {
         $acad_years = Academic_Year::all();
-        $activeAcadYear = $this->academicYearService->determineActiveAcademicYear();
-        if (!$activeAcadYear) {
-            return redirect()->back()->with('error', 'No active academic year found.');
+        $activeAcadYearAndTerm  = $this->academicYearService->determineActiveAcademicYearAndTerm();
+        if (!$activeAcadYearAndTerm ) {
+            return redirect()->back()->with('error', 'No active academic year or term found.');
         }
-        session(['active_academic_year' => $activeAcadYear->id]);
+        $activeAcadYear = $activeAcadYearAndTerm['activeAcadYear'];
+        $activeTerm = $activeAcadYearAndTerm['activeTerm'];
+        session([
+            'active_academic_year' => $activeAcadYear->id,
+            'active_term' => $activeTerm,
+        ]);
+
+        $uniqueSections = Section::query()
+            ->distinct('section_name')
+            ->get(['section_name']);
+
         $programs = Program::all();
         return view('admin.sections', [
             'programs' => $programs,
             'acad_years' => $acad_years,
             'activeAcadYear' => $activeAcadYear,
+            'activeTerm' => $activeTerm,
+            'uniqueSections' => $uniqueSections,
         ]);
     }
 
