@@ -156,7 +156,65 @@
             </div>
         </div>
     
-
+        <!-- Schedule day time -->
+        <div class="w-full">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Class Schedule:</label>
+            <p>Schedule 1</p>
+            <fieldset class="mb-4"> 
+                <legend class="text-base font-medium text-gray-900">Day(s)</legend>
+                <div class="mt-2 space-y-2">
+                    <div>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="days[]" value="Monday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            <span class="text-gray-700">Monday</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="days[]" value="Tuesday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            <span class="text-gray-700">Tuesday</span>
+                        </label>
+                    </div>
+                    <!-- Repeat for other days as needed -->
+                    <div>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="days[]" value="Wednesday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            <span class="text-gray-700">Wednesday</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="days[]" value="Wednesday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            <span class="text-gray-700">Thursday</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="days[]" value="Wednesday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            <span class="text-gray-700">Friday</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="days[]" value="Wednesday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                            <span class="text-gray-700">Saturday</span>
+                        </label>
+                    </div>
+                    <!-- Include all days you need -->
+                </div>
+            </fieldset>
+            
+            <div class="flex gap-4 mb-4">
+                <div class="w-1/2">
+                    <label for="start_time" class="block text-sm font-medium text-gray-700">Start Time:</label>
+                    <input type="time" id="start_time" name="start_time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div class="w-1/2">
+                    <label for="end_time" class="block text-sm font-medium text-gray-700">End Time:</label>
+                    <input type="time" id="end_time" name="end_time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+            </div>
+        </div>
 </div>
 
 <script>
