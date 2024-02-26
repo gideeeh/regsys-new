@@ -110,7 +110,8 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::delete('/admin/functions/program-course-management/academic_year/delete_acad_year/{id}',[AcademicYearController::class, 'destroy'])->name('academic-year.delete');
 /* Class Schedules */
     Route::get('/admin/functions/program-course-management/sections',[SectionController::class, 'index'])->name('sections');
-    Route::get('/admin/functions/program-course-management/sections/create',[SectionController::class, 'create_section'])->name('section.create');
+    // Route::get('/admin/functions/program-course-management/sections/create',[SectionController::class, 'create_section'])->name('section.create');
+    Route::post('/admin/functions/program-course-management/sections/create',[SectionController::class, 'store'])->name('section.create');
 
 /* Local APIs */
     Route::get('/admin/students/get-students/', [StudentRecordsController::class, 'student_json'])->name('students.json');

@@ -13,24 +13,14 @@ class Section extends Model
     protected $primaryKey = 'section_id';
     protected $fillable = [
         'section_name',
-        'subject_id',
         'academic_year',
         'term',
-        'is_openedUponRequest',
+        'year_level',
     ];
 
-    public function subject()
+    public function sectionSubject()
     {
-        return $this->belongsTo(Subject::class, 'subject_id');
+        return $this->hasMany(SectionSubject::class, 'section_id');
     }
 
-    public function enrolledSubjects()
-    {
-        return $this->hasMany(Enrolled_Subject::class, 'section_id');
-    }
-
-    public function sectionSchedules()
-    {
-        return $this->hasMany(Section_Schedule::class, 'section_id');
-    }
 }

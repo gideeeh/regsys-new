@@ -64,7 +64,7 @@ class Subject extends Model
         return $this->hasMany(Program_Semester_Subject::class, 'subject_id');
     }
 
-    public function sections()
+    public function sectionsSubject()
     {
         return $this->hasMany(Section::class, 'subject_id');
     }

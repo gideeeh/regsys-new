@@ -140,7 +140,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex justify-center space-x-4">
+                <div class="flex justify-center space-x-4 pt-12">
                     <button type="button" @click="manageProgramModal = false" class="w-4/12 bg-gray-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Cancel</button>
                     <button type="submit" class="w-4/12 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">Save</button>
                 </div>

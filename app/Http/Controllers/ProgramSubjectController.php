@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program_Subject;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -44,7 +45,13 @@ class ProgramSubjectController extends Controller
             } catch (\Illuminate\Database\QueryException $e) {
                 // Check if the error code is for a duplicate entry
                 if ($e->errorInfo[1] == 1062) {
-                    return back()->with('error', 'This subject is already assigned to the program for the specified term and year.');
+
+                    $subject = Subject::find($subjectId);
+                    $subjectName = $subject ? $subject->subject_name : 'Unknown Subject';
+                    $subjectCode = $subject ? $subject->subject_code : 'Unknown Code';
+                    // $subjectName = Subject::where('subject_id', $subjectId)->value('subject_name');
+                    // $subjectCode = Subject::where('subject_code', $subjectId)->value('subject_code');
+                    return back()->with('error', "The subject '{$subjectCode} - {$subjectName}' is already assigned to the program for the specified term and year.");
                 } else {
                     // Log or handle other database errors
                     Log::error('Database error: ' . $e->getMessage());

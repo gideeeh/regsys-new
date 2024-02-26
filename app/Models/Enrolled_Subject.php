@@ -25,13 +25,15 @@ class Enrolled_Subject extends Model
         return $this->belongsTo(Subject::class, 'subject_id');
     }
 
-    public function section()
+    public function sectionSubject()
     {
-        return $this->belongsTo(Section::class, 'section_id');
+        return $this->belongsTo(SectionSubject::class, 'section_id');
     }
 
     public function enrollment()
     {
         return $this->belongsTo(Enrollment::class, 'enrollment_id');
     }
+
+
 }
