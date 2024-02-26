@@ -95,11 +95,9 @@
                                                 selectedProgram = {{ $program->program_id }}; 
                                                 selectedProgramCode = '{{ $program->program_code }}'; 
                                                 selectedProgramName = '{{ $program->program_name }}'; 
-                                                selectedProgramDesc = '{{ $program->program_desc }}';
                                                 selectedDegreeType = '{{ $program->degree_type }}';
                                                 selectedDepartment = '{{ $program->dept_id }}';
-                                                selectedProgramCoordinator = '{{ $program->program_coordinator }}';
-                                                selectedTotalUnits = {{ $program->total_units }};" 
+                                                selectedProgramCoordinator = '{{ $program->program_coordinator }}';" 
                                         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition ease-in-out duration-150">Update</button>
                                     <button @click.stop="deleteModal = true; selectedProgram = {{ $program->program_id }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition ease-in-out duration-150">Delete</button>
                                 </div>

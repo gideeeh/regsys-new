@@ -14,7 +14,8 @@ class CS_SubjectSeeder extends Seeder
      */
     public function run(): void
     {
-        $csvFilePath = database_path('seeds/sample_partial_cs_subj_seeder.csv');
+        // $csvFilePath = database_path('seeds/sample_partial_cs_subj_seeder.csv');
+        $csvFilePath = database_path('seeds/seeder_subject_final.csv');
 
         $csv = Reader::createFromPath($csvFilePath, 'r');
         $csv->setHeaderOffset(0);

@@ -137,4 +137,22 @@ class ProgramController extends Controller
             'totalsByYearTerm' => $totalsByYearTerm,
         ]);
     }
+
+    public function program_json() {
+        $programs = Program::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $programs,
+        ]);
+    }
+
+    public function fetch_program_json($program_id) {
+        $program = Program::findOrFail($program_id);
+
+        return response()->json([
+            'success' => true,
+            'data' =>$program,
+        ]);
+    }
 }

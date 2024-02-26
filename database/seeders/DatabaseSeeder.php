@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             ProfessorSeeder::class,
             SectionScheduleSeeder::class,
             AdminUserSeeder::class,
+            ProgramSubjectSeeder::class,
         ]);
+        
     }
 }
