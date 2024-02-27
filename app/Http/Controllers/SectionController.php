@@ -32,7 +32,12 @@ class SectionController extends Controller
 
         $uniqueSections = Section::query()
             ->distinct('section_name')
-            ->get(['section_name']);
+            ->get(['section_id','section_name']);
+
+        $initial_sections = Section::query()
+            ->where('term',$activeTerm)
+            ->where('academic_year','2023-2024')
+            ->get();
 
         $programs = Program::all();
         return view('admin.sections', [
@@ -41,6 +46,7 @@ class SectionController extends Controller
             'activeAcadYear' => $activeAcadYear,
             'activeTerm' => $activeTerm,
             'uniqueSections' => $uniqueSections,
+            'initial_sections' => $initial_sections,
         ]);
     }
 
@@ -63,10 +69,10 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $section = Section::firstOrCreate([
-            'section_name' => $request->section_name,
-            'academic_year' => $request->academic_year,
-            'term' => $request->term,
-            'year_level' => $request->year_level,
+            'section_name' => $request->create_sec_section_name,
+            'academic_year' => $request->create_sec_acad_year,
+            'term' => $request->create_sec_term,
+            'year_level' => $request->create_sec_year_level,
         ]);
 
         if ($section->wasRecentlyCreated) {
@@ -74,5 +80,25 @@ class SectionController extends Controller
         } else {
             return redirect()->back()->with('error', 'Section already exists.');
         }
+    }
+
+    public function fetchSections(Request $request)
+    {
+        $query = Section::query();
+        
+        // Filter based on the provided input, ensuring to validate and sanitize input as necessary
+        if ($request->has('acad_year') && $request->acad_year != 'all') {
+            $query->where('academic_year', $request->acad_year);
+        }
+        if ($request->has('term') && $request->term != 'all') {
+            $query->where('term', $request->term);
+        }
+        if ($request->has('program') && $request->program != 'all') {
+            $query->where('program_id', $request->program);
+        }
+
+        $sections = $query->get(['section_name'])->toArray();
+
+        return response()->json(['sections' => $sections]);
     }
 }

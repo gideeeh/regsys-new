@@ -122,6 +122,7 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/admin/functions/get-programs/{program_id}', [ProgramController::class, 'fetch_program_json'])->name('program.json');
     Route::get('/admin/functions/get-program-subjects/', [ProgramSubjectController::class, 'program_subjects_json'])->name('program-subjects.json');
     Route::get('/program/{program_id}/subjects/{year}/{term}', [ProgramSubjectController::class, 'fetchSubjects'])->name('fetch.subjects');
+    Route::get('/sections/fetch', [SectionController::class,'fetchSections'])->name('fetch.sections');
 });
 
 require __DIR__.'/auth.php';
