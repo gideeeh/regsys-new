@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Program_Subject;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ProgramSubjectController extends Controller
@@ -82,10 +83,39 @@ class ProgramSubjectController extends Controller
         return response()->json($selectedSubjects);
     }
 
-    public function program_subjects_json()
+    public function fetchProgramSubjects(Request $request)
     {
-        $program_subjects = Program_Subject::all();
-        return response()->json($program_subjects);
+        // Extract request parameters
+        $program = $request->input('program');
+    
+        // Base query
+        $query = DB::table('program_subjects as ps')
+                    ->join('subjects as s', 'ps.subject_id', '=', 's.subject_id');
+    
+        // If a specific program is requested
+        if ($program && $program !== 'all') {
+            $query = $query->join('programs as p', 'ps.program_id', '=', 'p.program_id')
+                           ->select('p.program_code', 's.subject_code as course_code', 's.subject_name as course_name')
+                           ->where('p.program_id', $program);
+        } else {
+            // If "Select All" or no program is specified
+            $query = $query->select('s.subject_code as course_code', 's.subject_name as course_name')
+                           ->distinct();
+        }
+
+        if ($request->has('term')) {
+            $query->where('term', $request->term);
+        }
+        if ($request->has('year_level')) {
+            $query->where('year', $request->year_level);
+        }
+    
+        // Optional: Add filters for acad_year, term, year_level if needed
+        // Example: if ($request->filled('acad_year')) { $query->where('acad_year_column', $request->input('acad_year')); }
+    
+        $subjects = $query->get();
+    
+        return response()->json($subjects);
     }
     
 }

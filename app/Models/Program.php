@@ -33,6 +33,11 @@ class Program extends Model
     }
 
     public function programSemesterSubjects() {
-        return $this->hasMany(Program_Semester_Subject::class, 'program_id');
+        return $this->hasMany(Program_Subject::class, 'program_id');
+    }
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class, 'program_id');
     }
 }

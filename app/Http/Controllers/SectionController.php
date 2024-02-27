@@ -73,6 +73,7 @@ class SectionController extends Controller
             'academic_year' => $request->create_sec_acad_year,
             'term' => $request->create_sec_term,
             'year_level' => $request->create_sec_year_level,
+            'program_id' => $request->create_sec_program,
         ]);
 
         if ($section->wasRecentlyCreated) {
@@ -96,8 +97,18 @@ class SectionController extends Controller
         if ($request->has('program') && $request->program != 'all') {
             $query->where('program_id', $request->program);
         }
+        if ($request->has('year_level') && $request->year_level != 'all') {
+            $query->where('year_level', $request->year_level);
+        }
 
-        $sections = $query->get(['section_name'])->toArray();
+        $sections = $query->get(['section_id', 'section_name', 'year_level']);
+
+        if ($sections->isEmpty()) {
+            return response()->json([
+                'error' => 'No sections found for the specified criteria.',
+                'sections' => []
+            ], 404); 
+        }
 
         return response()->json(['sections' => $sections]);
     }

@@ -16,6 +16,7 @@ class Section extends Model
         'academic_year',
         'term',
         'year_level',
+        'program_id',
     ];
 
     public function sectionSubject()
@@ -23,4 +24,8 @@ class Section extends Model
         return $this->hasMany(SectionSubject::class, 'section_id');
     }
 
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id');
+    }
 }

@@ -32,7 +32,6 @@
         <table class="border-solid table-auto w-full whitespace-no-wrap bg-white table-striped relative overflow-hidden">
             <thead>
                 <tr class="bg-gradient-to-r from-sky-600 to-sky-800 text-white">
-                    <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Category</th>
                     <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Code</th>
                     <th rowspan="2" class="w-2/12 bg-sky-600 text-white p-2 border border-white border-r-0">Course Description</th> 
                     <th colspan="2" class="w-2/12 bg-sky-600 text-white p-2 border border-white border-r-0">Schedule(F2F)</th>
@@ -51,7 +50,6 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="border border-gray-300">&nbsp;</td>
                     <td class="border border-gray-300">&nbsp;</td>
                     <td class="border border-gray-300">&nbsp;</td>
                     <td class="border border-gray-300">&nbsp;</td>
@@ -100,7 +98,7 @@
                         <option value="3">3</option>
                     </select>
                 </div>
-                <div class="mb-4">
+                <!-- <div class="mb-4">
                     <label for="filter_program" class="w-full block text-md font-semibold text-gray-700">Program:</label>
                     <select id="filter_program" name="filter_program" class="text-md w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="all">Select All</option>
@@ -108,7 +106,7 @@
                         <option value="{{$program->program_id}}">{{$program->program_code}}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> -->
                 <div class="mb-4">
                     <label for="filter_year_level" class="block text-md font-semibold text-gray-700 mr-2">Year Level:</label>
                     <select id="filter_year_level" name="filter_year_level" class="text-md w-full border-gray-300 rounded-md shadow-sm" placeholder="Select Year Level" required>
@@ -155,6 +153,17 @@
                         <option value="3">3</option>
                     </select>
                 </div>
+                <!-- <div class="flex flex-col mb-4">
+                    <label for="create_sec_program" class="block text-md font-semibold text-gray-700 mr-2">Program:</label>
+                    <select id="create_sec_program" name="create_sec_program" class="text-md border-gray-300 rounded-md shadow-sm" required>
+                        <option value="" hidden>Select Program</option>
+                        @foreach($programs as $program)
+                        <option value="{{ $program->program_id }}">
+                            {{ $program->program_code }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div> -->
                 <div class="flex flex-col mb-4">
                     <label for="create_sec_year_level" class="block text-md font-semibold text-gray-700 mr-2">Year Level:</label>
                     <select id="create_sec_year_level" name="create_sec_year_level" class="text-md w-full border-gray-300 rounded-md shadow-sm" placeholder="Select Year Level" required>
@@ -173,7 +182,7 @@
     </div>
     
     <!-- Manage Schedule Modal -->
-    <div x-cloak x-show="manageSchedule" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
+    <div x-cloak id="manageSchedule" x-show="manageSchedule" class="manage-schedule fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50" data-section-id="${subject.section_id}">
         <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto min-wd-lg max-w-xl w-full min-h-[85vh] max-h-[90vh]">
             <h2>Manage Section</h2>
             <!-- F2F Class Schedule -->
@@ -321,65 +330,9 @@
 </div>
 
 <script>
-$(document).ready(function() {
-    // Bind an event listener to the 'Confirm' button in your 'Filter By' modal
-
-    updateSectionScheduleInfo();
-
-    // Event listener for the 'Confirm' button
-    $('#filter-confirm-button').on('click', function() {
-        updateSectionScheduleInfo();
-    });
-
-    function updateSectionScheduleInfo() {
-        var acadYear = $('#filter_acad_year').val();
-        var term = $('#filter_term').val();
-        var programText = $('#filter_program').find(":selected").text();
-        var yearLevel = $('#filter_year_level').val();
-
-        $('#display_acad_year').text(acadYear);
-        $('#display_term').text(term);
-        $('#display_program').text(programText === 'Select All' ? "All Programs" : programText);
-        $('#display_year_level').text(yearLevel);
-    }
-
-    function fetchAndUpdateSections() {
-    $.ajax({
-        url: '/sections/fetch', 
-        type: 'GET',
-        data: {
-            acad_year: $('#filter_acad_year').val(),
-            term: $('#filter_term').val(),
-            program: $('#filter_program').val(),
-        },
-        success: function(data) {
-            updateSectionButtons(data.sections);
-        },
-        error: function(error) {
-            console.error("Error fetching sections:", error);
-        }
-    });
-    }
-
-    // This function updates the UI with new section buttons
-    function updateSectionButtons(sections) {
-        var container = $('#display-sections');
-        container.empty(); // Clear existing buttons
-        sections.forEach(function(section) {
-            var button = $('<button/>', {
-                text: section.section_name,
-                class: 'bg-rose-500 text-white text-md px-2 py-2 rounded hover:bg-rose-600 transition ease-in-out duration-150',
-                click: function() { /* Define any click behavior */ }
-            });
-            container.append(button);
-        });
-    }
-
-    // Example of hooking up the function to filter changes
-    $('#filter_acad_year, #filter_term, #filter_program').on('change', fetchAndUpdateSections);
-
-    // Call initially if needed
-    fetchAndUpdateSections();
-});
+    var sectionsUrl = '/sections/fetch';
+    // var programSubjectsUrl = '/admin/functions/get-program-subjects/';
+    var programSubjectsUrl = "{{ route('program-subjects.json') }}";
 </script>
+<script src="{{asset('js/sections.js')}}"></script>
 @endsection
