@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             AcademicYearSeeder::class,
             // SectionSeeder::class,
             // EnrolledSubjectsSeeder::class,
-            // ProfessorSeeder::class,
+            ProfessorSeeder::class,
             // SectionScheduleSeeder::class,
             AdminUserSeeder::class,
             ProgramSubjectSeeder::class,

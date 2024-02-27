@@ -18,7 +18,7 @@
                                     <li><a href="{{ route('academic-calendar') }}" class="{{ request()->routeIs('academic-calendar') ? 'active-main' : '' }} block rounded-md py-4 px-6 hover:bg-gray-200">Academic Calendar</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#" class="block py-4 px-4 hover:bg-gray-200">Faculty Records</a></li>
+                            <li><a href="{{route('faculty-records')}}" class="block py-4 px-4 hover:bg-gray-200">Faculty Records</a></li>
                             <li><a href="#" class="block py-4 px-4 hover:bg-gray-200">Subject Records</a></li>
                         </ul>
                     </nav>

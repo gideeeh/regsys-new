@@ -13,6 +13,8 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProgramSubjectController;
 use App\Http\Controllers\RegistrarFunctionsController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\SectionSubjectSchedulesController;
+use App\Http\Controllers\SectionSubjectsController;
 use App\Http\Controllers\StudentNoteController;
 use App\Http\Controllers\StudentRecordsController;
 use App\Http\Controllers\SubjectCatalogController;
@@ -112,7 +114,8 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/admin/functions/program-course-management/sections',[SectionController::class, 'index'])->name('sections');
     // Route::get('/admin/functions/program-course-management/sections/create',[SectionController::class, 'create_section'])->name('section.create');
     Route::post('/admin/functions/program-course-management/sections/create',[SectionController::class, 'store'])->name('section.create');
-
+/* Sections, Section Subjects */
+    Route::post('/admin/functions/sections/assign-schedule',[SectionSubjectsController::class, 'store'])->name('section-subject.store');
 /* Local APIs */
     Route::get('/admin/students/get-students/', [StudentRecordsController::class, 'student_json'])->name('students.json');
     Route::get('/admin/students/get-students/{student_id}', [StudentRecordsController::class, 'fetch_student_json'])->name('students.fetch');
@@ -122,8 +125,13 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/admin/functions/get-programs/{program_id}', [ProgramController::class, 'fetch_program_json'])->name('program.json');
     // Route::get('/admin/functions/get-program-subjects/', [ProgramSubjectController::class, 'program_subjects_json'])->name('program-subjects.json');
     Route::get('/admin/functions/get-program-subjects/', [ProgramSubjectController::class, 'fetchProgramSubjects'])->name('program-subjects.json');
+    Route::get('/admin/functions/get-program-subjects/all', [ProgramSubjectController::class, 'program_subjects_json'])->name('program-subjects-all.json');
     Route::get('/program/{program_id}/subjects/{year}/{term}', [ProgramSubjectController::class, 'fetchSubjects'])->name('fetch.subjects');
     Route::get('/sections/fetch', [SectionController::class,'fetchSections'])->name('fetch.sections');
+    Route::get('/admin/functions/get-faculty', [FacultyRecordsController::class, 'faculty_json'])->name('faculty_json');
+    Route::get('/admin/functions/get-faculty/{prof_id}', [FacultyRecordsController::class, 'fetch_faculty_json'])->name('faculty_json.fetch');
+    Route::get('/admin/functions/get-schedules', [SectionSubjectSchedulesController::class, 'sec_sub_schedule_json'])->name('sec_sub_schedule_json');
+
 });
 
 require __DIR__.'/auth.php';

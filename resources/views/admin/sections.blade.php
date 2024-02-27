@@ -60,18 +60,13 @@
                     <td class="border border-gray-300">&nbsp;</td>
                     <td class="border border-gray-300">&nbsp;</td>
                     <td>
-                        <div class="flex justify-start">
+                        <!-- <div class="flex justify-start">
                             <button @click="manageSchedule=true" class="bg-green-500 w-full text-white text-xs px-1 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Manage</button>
-                        </div>
+                        </div> -->
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="flex px-8 py-2 bg-gray-300 text-sm">
-            <span class="w-4/12 total-units-lec"><strong>Total Units(Lec):</strong> </span>
-            <span class="w-4/12 total-units-lab"><strong>Total Units(Lab):</strong></span>
-            <span class="w-4/12 total-units"><strong>Total Units:</strong> </span>
-        </div>
     </div>
 
     <!-- Filter By Modal -->
@@ -186,7 +181,10 @@
         <div class="modal-content bg-white p-8 rounded-lg shadow-lg overflow-auto min-wd-lg max-w-xl w-full min-h-[85vh] max-h-[90vh]">
             <h2>Manage Section</h2>
             <!-- F2F Class Schedule -->
-            <form action="#" method="POST">
+            <form id="createSectionSchedule" action="{{route('section-subject.store')}}" method="POST">
+                @csrf
+                <input type="hidden" id="subject_id" name="subject_id">
+                <input type="hidden" id="section_id" name="section_id">
                 <div class="cursor-default w-full acad-year-card border-solid border-2 border-slate-400 rounded-md px-4 py-4 mb-6 mr-12 hover:border-sky-950">
                     <label class="block text-md font-semibold mb-2">F2F Class Schedule</label>
                     <fieldset class="mb-4"> 
@@ -239,11 +237,11 @@
                     <div class="flex gap-4 mb-4">
                         <div class="w-1/2">
                             <label for="f2f_start_time" class="block text-sm font-medium text-gray-700">Start Time:</label>
-                            <input type="time" id="f2f_start_time" name="f2f_start_time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="time" id="f2f_start_time" name="start_time_f2f" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                         </div>
                         <div class="w-1/2">
                             <label for="f2f_end_time" class="block text-sm font-medium text-gray-700">End Time:</label>
-                            <input type="time" id="f2f_end_time" name="f2f_end_time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="time" id="f2f_end_time" name="end_time_f2f" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                         </div>
                     </div>
                 </div>
@@ -300,17 +298,18 @@
                     <div class="flex gap-4 mb-4">
                         <div class="w-1/2">
                             <label for="start_time" class="block text-sm font-medium text-gray-700">Start Time:</label>
-                            <input type="time" id="online_start_time" name="online_start_time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="time" id="start_time_online" name="start_time_online" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                         </div>
                         <div class="w-1/2">
                             <label for="end_time" class="block text-sm font-medium text-gray-700">End Time:</label>
-                            <input type="time" id="online_end_time" name="online_end_time" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="time" id="end_time_online" name="end_time_online" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                         </div>
                     </div>
                 </div>
                 <div class="mb-4">
                     <label for="prof" class="block text-sm font-medium text-gray-700">Lecturer:</label>
-                    <input type="text" id="prof" name="prof" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <!-- <input type="text" id="prof_id" name="prof_id" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"> -->
+                    <select id="prof_id" name="prof_id" x-model="prof_id" style="width: 100%;"></select>
                 </div>
                 <div class="mb-4">
                     <label for="room" class="block text-sm font-medium text-gray-700">Room:</label>
@@ -322,7 +321,7 @@
                 </div>
                 <div class="flex justify-end space-x-4 pt-6">
                     <button type="button" @click="manageSchedule = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Cancel</button>
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">Confirm</button>
+                    <button class="assign_section bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">Confirm</button>
                 </div>
             </form>
         </div>
@@ -331,6 +330,7 @@
 
 <script>
     var sectionsUrl = '/sections/fetch';
+    var facultyUrl = '/admin/functions/get-faculty';
     // var programSubjectsUrl = '/admin/functions/get-program-subjects/';
     var programSubjectsUrl = "{{ route('program-subjects.json') }}";
 </script>

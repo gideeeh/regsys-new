@@ -108,7 +108,6 @@ $(document).ready(function() {
 
     function updateSelectedSubjects() {
         $("table tbody tr").each(function() {
-            // Assuming the subject ID is stored in the row's data attribute
             let subjectId = $(this).data('subjectId');
             if (subjectId) {
                 selectedSubjects.push(subjectId);

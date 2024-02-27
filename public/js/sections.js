@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    let currentSectionId = null;
     $('#filter-confirm-button').on('click', function() {
         fetchAndUpdateSections();
         updateSectionScheduleInfo();
@@ -44,9 +44,8 @@ $(document).ready(function() {
     
         data.forEach(function(subject) {
             var row = $('<tr></tr>');
-            // row.append($('<td></td>').text(subject.category));
-            row.append($('<td class="border font-semibold border-gray-300"></td>').text(subject.course_code));
-            row.append($('<td class="border border-gray-300"></td>').text(subject.course_name));
+            row.append($(`<td class="border font-semibold border-gray-300" subject_id="${subject.subject_id}" subject_code="${subject.subject_code}"></td>`).text(subject.subject_code));
+            row.append($(`<td class="border border-gray-300" subject_name="${subject.subject_name}"></td>`).text(subject.subject_name));
             row.append($('<td class="border border-gray-300"></td>'));
             row.append($('<td class="border border-gray-300"></td>'));
             row.append($('<td class="border border-gray-300"></td>'));
@@ -54,7 +53,7 @@ $(document).ready(function() {
             row.append($('<td class="border border-gray-300"></td>'));
             row.append($('<td class="border border-gray-300"></td>'));
             row.append($('<td class="border border-gray-300"></td>'));
-            row.append($("<td><div class='flex justify-start'><button @click='manageSchedule=true' class='manageButton bg-green-500 w-full text-white text-xs px-1 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150'>Manage</button></div></td>"));
+            row.append($("<td class='border border-gray-300'><button @click='manageSchedule=true' class='manageButton bg-green-500 w-full text-white text-xs px-1 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150'>Manage</button></td>"));
             tbody.append(row);
         });
     }
@@ -62,11 +61,17 @@ $(document).ready(function() {
     let manageSchedule = false;
 
     // jQuery click event handler for the button
-    $('body').on('click', '.manageButton', function() {
-        console.log('managebuttonclicked')
+    $('table').on('click', '.manageButton', function() {
+        console.log('managebuttonclicked');
+        var subjectIdValue = $(this).closest('td').prevAll('[subject_id]').attr('subject_id');
+        var subjectCodeValue = $(this).closest('td').prevAll('[subject_code]').attr('subject_code');
+        var subjectNameValue = $(this).closest('td').prevAll('[subject_code]').attr('subject_code');
+        $('#subject_id').val(subjectIdValue);
+        $('#section_id').val(currentSectionId);
+        console.log(`Subject id: ${subjectIdValue} ${subjectNameValue}`);
+        console.log(subjectCodeValue);
+        console.log(`Current Section ${currentSectionId}`);
         $('#manageSchedule').show();
-        // manageSchedule = !manageSchedule; 
-        // showOrHideManageSchedule(); 
     });
     // Function to show or hide the manageSchedule div based on the value of manageSchedule
     function showOrHideManageSchedule() {
@@ -128,12 +133,24 @@ $(document).ready(function() {
         });
     }
 
+    $('.assign_section').on('click', function() {
+        var form = document.getElementById('createSectionSchedule');
+        if(form.checkValidity()) {
+            form.method = 'POST';
+            form.submit();
+        }
+        else {
+            alert('Please complete the form to complete section schedule assignment');
+        }
+    });
+
     $('#display-sections').on('click', 'button[id^="section-"]', function() {
         var sectionId = this.id.replace('section-', ''); 
         selectSection(sectionId);
     });
 
     function selectSection(sectionId) {
+        currentSectionId = sectionId;
         $('button[id^="section-"]').attr('class', 'bg-gray-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150');
         $('#section-' + sectionId).attr('class', 'bg-rose-500 text-white text-md px-2 py-2 rounded hover:bg-rose-600 transition ease-in-out duration-150');
     }
@@ -141,6 +158,29 @@ $(document).ready(function() {
     // $('#filter_acad_year, #filter_term, #filter_program, #filter_year').on('change', function() {
     //     fetchAndUpdateSections();
     // });
+
+    $('#prof_id').select2({
+        width: 'resolve',
+        placeholder: "Professor Name",
+        allowClear: true,
+        minimumInputLength: 1,
+        ajax: {
+            url: facultyUrl ,
+            dataType: 'json',
+            delay: 20,
+            processResults: function (data) {
+                return {
+                    results: data.map(function (item) {
+                        return {
+                            id: item.prof_id,
+                            text: item.first_name + ' ' + item.last_name
+                        };
+                    })
+                };
+            },
+            cache: true
+        }
+    });
 
     updateSectionScheduleInfo();
     fetchAndUpdateSections();
