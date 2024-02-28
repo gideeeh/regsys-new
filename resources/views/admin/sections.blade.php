@@ -333,6 +333,7 @@
     var facultyUrl = '/admin/functions/get-faculty';
     // var programSubjectsUrl = '/admin/functions/get-program-subjects/';
     var programSubjectsUrl = "{{ route('program-subjects.json') }}";
+    var fetchSectionSchedule = '/admin/functions/fetch-schedule';
 </script>
 <script src="{{asset('js/sections.js')}}"></script>
 @endsection

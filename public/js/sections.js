@@ -46,15 +46,42 @@ $(document).ready(function() {
             var row = $('<tr></tr>');
             row.append($(`<td class="border font-semibold border-gray-300" subject_id="${subject.subject_id}" subject_code="${subject.subject_code}"></td>`).text(subject.subject_code));
             row.append($(`<td class="border border-gray-300" subject_name="${subject.subject_name}"></td>`).text(subject.subject_name));
-            row.append($('<td class="border border-gray-300"></td>'));
-            row.append($('<td class="border border-gray-300"></td>'));
-            row.append($('<td class="border border-gray-300"></td>'));
-            row.append($('<td class="border border-gray-300"></td>'));
-            row.append($('<td class="border border-gray-300"></td>'));
-            row.append($('<td class="border border-gray-300"></td>'));
-            row.append($('<td class="border border-gray-300"></td>'));
-            row.append($("<td class='border border-gray-300'><button @click='manageSchedule=true' class='manageButton bg-green-500 w-full text-white text-xs px-1 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150'>Manage</button></td>"));
-            tbody.append(row);
+
+            $.ajax({
+                url: fetchSectionSchedule,
+                type: 'GET',
+                data: {
+                    section_id: currentSectionId,
+                    subject_id: subject.subject_id
+                },
+                success: function(scheduleData) {
+                    var schedule = scheduleData[0] || {};
+                    var f2fTimeSchedule = formatTime(schedule.start_time_f2f, schedule.end_time_f2f);
+                    var onlineTimeSchedule = formatTime(schedule.start_time_online, schedule.end_time_online);
+                    var formattedClassDaysF2F = formatDays(schedule.class_days_f2f || '[]');
+                    var formattedClassDaysOnline = formatDays(schedule.class_days_online || '[]');
+                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.time_schedule_f2f || 'N/A'));
+                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.class_days_online || 'N/A'));
+                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.room || 'N/A'));
+                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.room || 'N/A'));
+                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.room || 'N/A'));
+                    row.append($('<td class="border border-gray-300"></td>').text(formattedClassDaysF2F || 'N/A'));
+                    row.append($('<td class="border border-gray-300"></td>').text(f2fTimeSchedule || 'N/A'));
+                    row.append($('<td class="border border-gray-300"></td>').text(formattedClassDaysOnline || 'N/A'));
+                    row.append($('<td class="border border-gray-300"></td>').text(onlineTimeSchedule || 'N/A'));
+                    row.append($('<td class="border border-gray-300"></td>').text(schedule.professor_name || 'N/A'));
+                    row.append($('<td class="border border-gray-300"></td>').text(schedule.room || 'N/A'));
+                    row.append($('<td class="border border-gray-300"></td>').text(schedule.class_limit || 'N/A'));
+                    row.append($("<td class='border border-gray-300'></td>").append("<button class='manageButton bg-green-500 w-full text-white text-xs px-1 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150'>Manage</button>"));
+                    tbody.append(row);
+                },
+                error: function(error) {
+                    console.error("Error fetching schedule details:", error);
+                    row.append($('<td class="border border-gray-300" colspan="7"></td>').text('Schedule Information Not Set'));
+                    row.append($("<td class='border border-gray-300'></td>").append("<button class='manageButton bg-green-500 w-full text-white text-xs px-1 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150'>Manage</button>"));
+                    tbody.append(row);
+                }
+            });
         });
     }
 
@@ -127,6 +154,7 @@ $(document).ready(function() {
                     console.log(`Year level: ${section.year_level}`);
                     console.log(`Section Id: ${section.section_id}`);
                     console.log(`Section name: ${section.section_name}`);
+                    fetchProgramSubjects();
                 }
             });
             container.append(button);
@@ -153,11 +181,8 @@ $(document).ready(function() {
         currentSectionId = sectionId;
         $('button[id^="section-"]').attr('class', 'bg-gray-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150');
         $('#section-' + sectionId).attr('class', 'bg-rose-500 text-white text-md px-2 py-2 rounded hover:bg-rose-600 transition ease-in-out duration-150');
+        
     }
-
-    // $('#filter_acad_year, #filter_term, #filter_program, #filter_year').on('change', function() {
-    //     fetchAndUpdateSections();
-    // });
 
     $('#prof_id').select2({
         width: 'resolve',
@@ -181,6 +206,38 @@ $(document).ready(function() {
             cache: true
         }
     });
+
+    function formatTime(startTime, endTime) {
+        function formatSingleTime(timeStr) {
+            let dateTime = new Date('1970-01-01T' + timeStr + 'Z');
+            let options = { hour: 'numeric', minute: 'numeric', hour12: true };
+            return new Intl.DateTimeFormat('en-US', options).format(dateTime);
+        }
+    
+        let formattedStartTime = formatSingleTime(startTime);
+        let formattedEndTime = formatSingleTime(endTime);
+    
+        return formattedStartTime + ' - ' + formattedEndTime;
+    }
+
+    function formatDays(daysJson) {
+        const daysArray = JSON.parse(daysJson);
+    
+        const abbreviations = daysArray.map(day => {
+            switch(day) {
+                case 'Monday': return 'MON';
+                case 'Tuesday': return 'TUE';
+                case 'Wednesday': return 'WED';
+                case 'Thursday': return 'THU';
+                case 'Friday': return 'FRI';
+                case 'Saturday': return 'SAT';
+                case 'Sunday': return 'SUN';
+                default: return '';
+            }
+        });
+    
+        return abbreviations.join(' ');
+    }
 
     updateSectionScheduleInfo();
     fetchAndUpdateSections();
