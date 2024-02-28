@@ -93,15 +93,6 @@
                         <option value="3">3</option>
                     </select>
                 </div>
-                <!-- <div class="mb-4">
-                    <label for="filter_program" class="w-full block text-md font-semibold text-gray-700">Program:</label>
-                    <select id="filter_program" name="filter_program" class="text-md w-full border-gray-300 rounded-md shadow-sm" required>
-                        <option value="all">Select All</option>
-                        @foreach($programs as $program)
-                        <option value="{{$program->program_id}}">{{$program->program_code}}</option>
-                        @endforeach
-                    </select>
-                </div> -->
                 <div class="mb-4">
                     <label for="filter_year_level" class="block text-md font-semibold text-gray-700 mr-2">Year Level:</label>
                     <select id="filter_year_level" name="filter_year_level" class="text-md w-full border-gray-300 rounded-md shadow-sm" placeholder="Select Year Level" required>

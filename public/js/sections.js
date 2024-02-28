@@ -60,11 +60,6 @@ $(document).ready(function() {
                     var onlineTimeSchedule = formatTime(schedule.start_time_online, schedule.end_time_online);
                     var formattedClassDaysF2F = formatDays(schedule.class_days_f2f || '[]');
                     var formattedClassDaysOnline = formatDays(schedule.class_days_online || '[]');
-                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.time_schedule_f2f || 'N/A'));
-                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.class_days_online || 'N/A'));
-                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.room || 'N/A'));
-                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.room || 'N/A'));
-                    // row.append($('<td class="border border-gray-300"></td>').text(schedule.room || 'N/A'));
                     row.append($('<td class="border border-gray-300"></td>').text(formattedClassDaysF2F || 'N/A'));
                     row.append($('<td class="border border-gray-300"></td>').text(f2fTimeSchedule || 'N/A'));
                     row.append($('<td class="border border-gray-300"></td>').text(formattedClassDaysOnline || 'N/A'));
