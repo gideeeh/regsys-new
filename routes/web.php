@@ -133,6 +133,7 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/admin/functions/get-faculty/{prof_id}', [FacultyRecordsController::class, 'fetch_faculty_json'])->name('faculty_json.fetch');
     Route::get('/admin/functions/get-schedules', [SectionSubjectSchedulesController::class, 'sec_sub_schedule_json'])->name('sec_sub_schedule_json');
     Route::get('/admin/functions/fetch-schedule', [SectionSubjectSchedulesController::class, 'fetchScheduleDetailsForSectionAndSubject'])->name('sec_sub_schedule.fetch');
+    Route::get('/admin/functions/get-section-subjects', [SectionSubjectsController::class, 'search'])->name('sec_sub.search');
 });
 
 require __DIR__.'/auth.php';

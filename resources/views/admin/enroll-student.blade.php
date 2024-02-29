@@ -137,9 +137,7 @@
                                 </select>
                             </div>
                         </td>
-                        <td>
-                            <select id="select_section" name="select_section" style="width: 100%;">
-                        </td>
+                        <td class="border border-gray-300"><!-- Insert Units Lec --></td>
                         <td class="border border-gray-300"><!-- Insert Units Lec --></td>
                         <td class="border border-gray-300"><!-- Insert Units Lab --></td>
                         <td class="border border-gray-300"><!-- Units Lec + Lab --></td>
@@ -158,7 +156,7 @@
         </div>
         <div class="flex justify-end">
             <button type="button" class="enroll shadow bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Enroll</button>
-            <!-- <button type="button" class="log-data shadow bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Log</button> -->
+            <button type="button" class="log-data shadow bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Log</button>
         </div>
     </form>
 </div>
@@ -166,6 +164,8 @@
 <script>
     var getSubjectsUrl = "{{ url('/admin/functions/get-subjects') }}";
     var getStudentsUrl = "{{ url('/admin/students/get-students') }}";
+    var fetchSection = "{{url('/sections/fetch')}}"
+    var searchSecSub = "{{url('/admin/functions/get-section-subjects')}}" 
     // Any other variables
 </script>
 <script src="{{ asset('js/enrollments.js') }}"></script>

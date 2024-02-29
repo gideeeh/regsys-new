@@ -13,33 +13,6 @@ $(document).ready(function() {
         logCurrentInputs();
     });
 
-    $('#select_section').select2({
-        width: 'resolve',
-        placeholder: "Select Section",
-        allowClear: true,
-        minimumInputLength: 0,
-        ajax: {
-            url: getSubjectsUrl, /* Still to change */
-            datatype: 'json',
-            delay: 0,
-            processResults: function (data) {
-                return {
-                    results: data.map(function (item) {
-                        return {
-                            id: item.subject_id,
-                            text: item.subject_code,
-                            subject_code: item.subject_code,
-                            subject_name: item.subject_name,
-                            units_lec: item.units_lec,
-                            units_lab: item.units_lab,
-                            total_units: item.units_lec + item.units_lab
-                        };
-                    })
-                };
-            },
-        }
-    });
-
     $('#enroll_subjects').select2({
         width: 'resolve',
         placeholder: "Select Subject to Enroll",
@@ -72,10 +45,12 @@ $(document).ready(function() {
             subject_id: subjectDetails.id,
         });
 
+        let uniqueSectionSelectId = 'select_section_' + Date.now();
+
         let newRow = `<tr data-subject-id="${subjectDetails.id}">
             <td class="border border-gray-300 text-center""><strong>${subjectDetails.subject_code}</strong></td>
             <td class="border border-gray-300 text-center"">${subjectDetails.subject_name}</td>
-            <td class="border border-gray-300 text-center""><!-- Section --></td>
+            <td class="border border-gray-300 text-center"><select id="${uniqueSectionSelectId}" name="select_section[]" style="width: 100%;"></select></td>
             <td class="border border-gray-300 text-center">${subjectDetails.units_lec}</td>
             <td class="border border-gray-300 text-center"">${subjectDetails.units_lab}</td>
             <td class="border border-gray-300 text-center"">${subjectDetails.total_units}</td>
@@ -87,6 +62,8 @@ $(document).ready(function() {
         </tr>`;
 
         $("table tbody").prepend(newRow);
+
+        initializeSectionSelect2(`#${uniqueSectionSelectId}`);
 
         $enrollSubjects.val(null).trigger('change');
         updateTotalUnits();
@@ -187,5 +164,41 @@ $(document).ready(function() {
             }
         });
     });
+
+    function initializeSectionSelect2(selector) {
+        $(selector).select2({
+            width: 'resolve',
+            placeholder: "Select Section",
+            allowClear: true,
+            minimumInputLength: 0,
+            ajax: {
+                url: searchSecSub, 
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    let subject_id = $(selector).closest('tr').attr('data-subject-id');
+                    return {
+                        search: params.term,
+                        acad_year: $('#acad_year').val(),
+                        term: $('#term').val(),
+                        year_level: $('#year_level').val(),
+                        subject_id: subject_id
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                        results: data.map(function(item) {
+                            return {
+                                id: item.section_id,
+                                text: item.section_name
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+    }
+
     updateTotalUnits();
 });

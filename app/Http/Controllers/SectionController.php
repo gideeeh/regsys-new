@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Academic_Year;
 use App\Models\Program;
 use App\Models\Section;
+use App\Models\SectionSubject;
 use App\Services\AcademicYearService;
 use Illuminate\Http\Request;
 
@@ -111,5 +112,10 @@ class SectionController extends Controller
         }
 
         return response()->json(['sections' => $sections]);
+    }
+
+    public function searchSection(Request $request)
+    {
+
     }
 }
