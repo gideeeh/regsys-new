@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Services\AcademicYearService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EnrollmentsController extends Controller
 {
@@ -103,6 +104,8 @@ class EnrollmentsController extends Controller
             'status' => 'sometimes|string|max:45',
             'enrollment_method' => 'required|string|max:45',
             'selectedSubjects' => 'required|json',
+            'sec_sub_ids' => 'required|array',
+            'sec_sub_ids.*' => 'required|exists:section_subjects,id',
         ]);
 
         $selectedSubjects = json_decode($request->selectedSubjects, true);
@@ -115,7 +118,7 @@ class EnrollmentsController extends Controller
         ])->first();
 
         if ($existingEnrollment) {
-            \Log::warning("Duplicate enrollment attempt for student_id {$validated['student_id']} for academic year {$validated['acad_year']}, term {$validated['term']}.");
+            Log::warning("Duplicate enrollment attempt for student_id {$validated['student_id']} for academic year {$validated['acad_year']}, term {$validated['term']}.");
             return redirect()->back()->with('error', 'An enrollment record already exists for the selected academic year, term, and program.');
         }
 
@@ -137,7 +140,7 @@ class EnrollmentsController extends Controller
 
             return view('admin.enrolled-subject');
         } catch (\Exception $e) {
-            \Log::error('Enrollment creation failed: ' . $e->getMessage());
+            Log::error('Enrollment creation failed: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error in enrolling the student.');
         }
     }

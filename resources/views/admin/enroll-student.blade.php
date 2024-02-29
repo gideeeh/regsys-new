@@ -109,23 +109,24 @@
             </div>
         </div>
         <!-- Subjects To Enroll-->
-        <div class="w-full rounded-lg mb-4">
+        <div class="w-full rounded-lg mb-8">
             <table class="border-solid table-auto w-full whitespace-no-wrap bg-white table-striped relative overflow-hidden">
                 <thead>
                     <tr class="bg-gradient-to-r from-sky-600 to-sky-800 text-white">
-                        <th rowspan="2" class="w-2/12 bg-sky-600 text-white p-2 border border-white border-r-0">Course Code</th>
-                        <th rowspan="2" class="w-3/12 bg-sky-600 text-white p-2 border border-white border-r-0">Course Description</th>
+                        <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Course Code</th>
+                        <th rowspan="2" class="w-2/12 bg-sky-600 text-white p-2 border border-white border-r-0">Course Description</th>
                         <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Section</th>
-                        <th colspan="3" class="w-3/12 bg-sky-600 text-white p-2 border border-white border-r-0">Units</th> 
-                        <th colspan="2" class="w-2/12 bg-sky-600 text-white p-2 border border-white border-r-0">Schedule</th>
+                        <th colspan="2" class="w-3/12 bg-sky-600 text-white p-2 border border-white border-r-0">Units</th> 
+                        <th colspan="4" class="w-2/12 bg-sky-600 text-white p-2 border border-white border-r-0">Schedule</th>
                         <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Action</th>
                     </tr>
                     <tr class="bg-gradient-to-r from-emerald-400 to-emerald-800 text-white">
-                        <th class="w-1/12 bg-emerald-400 text-white p-2 border border-white border-r-0">Lec</th>
-                        <th class="w-1/12 bg-emerald-400 text-white p-2 border border-white border-r-0">Lab</th>
-                        <th class="w-1/12 bg-emerald-800 text-white p-2 border border-white border-r-0">Total</th>
-                        <th rowspan="2" class="w-1/12 bg-emerald-400 text-white p-2 border border-white border-r-0">Day</th>
-                        <th rowspan="2" class="w-1/12 bg-emerald-400 text-white p-2 border border-white border-r-0">Time</th>    
+                        <th class="w-1/12 bg-rose-400 text-white p-2 border border-white border-r-0">Lec</th>
+                        <th class="w-1/12 bg-rose-400 text-white p-2 border border-white border-r-0">Lab</th>
+                        <th rowspan="2" class="w-1/12 bg-emerald-400 text-white p-2 border border-white border-r-0">Day(F2F)</th>
+                        <th rowspan="2" class="w-1/12 bg-emerald-400 text-white p-2 border border-white border-r-0">Time(F2F)</th>    
+                        <th rowspan="2" class="w-1/12 bg-cyan-400 text-white p-2 border border-white border-r-0">Day(OL)</th>
+                        <th rowspan="2" class="w-1/12 bg-cyan-400 text-white p-2 border border-white border-r-0">Time(OL)</th>    
                     </tr>
                 </thead>
                 <tbody>
@@ -155,8 +156,8 @@
             </div>
         </div>
         <div class="flex justify-end">
-            <button type="button" class="enroll shadow bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Enroll</button>
-            <button type="button" class="log-data shadow bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Log</button>
+            <button type="button" class="w-1/4 enroll shadow bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Enroll</button>
+            <!-- <button type="button" class="log-data shadow bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Log</button> -->
         </div>
     </form>
 </div>

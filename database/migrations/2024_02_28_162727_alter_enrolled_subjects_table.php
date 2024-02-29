@@ -14,16 +14,16 @@ return new class extends Migration
                 $table->dropColumn('section_id');
             }
 
-            $table->unsignedBigInteger('sub_section_id')->nullable()->after('subject_id');
-            $table->foreign('sub_section_id')->references('id')->on('section_subjects')->onDelete('set null');
+            $table->unsignedBigInteger('sec_sub_id')->nullable()->after('subject_id');
+            $table->foreign('sec_sub_id')->references('id')->on('section_subjects')->onDelete('set null');
         });
     }
 
     public function down(): void
     {
         Schema::table('enrolled_subjects', function (Blueprint $table) {
-            $table->dropForeign(['sub_section_id']);
-            $table->dropColumn('sub_section_id');
+            $table->dropForeign(['sec_sub_id']);
+            $table->dropColumn('sec_sub_id');
 
             $table->unsignedBigInteger('section_id')->nullable()->after('subject_id');
             $table->foreign('section_id')->references('section_id')->on('sections')->onDelete('set null');

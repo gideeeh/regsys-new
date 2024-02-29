@@ -50,12 +50,13 @@ $(document).ready(function() {
         let newRow = `<tr data-subject-id="${subjectDetails.id}">
             <td class="border border-gray-300 text-center""><strong>${subjectDetails.subject_code}</strong></td>
             <td class="border border-gray-300 text-center"">${subjectDetails.subject_name}</td>
-            <td class="border border-gray-300 text-center"><select id="${uniqueSectionSelectId}" name="select_section[]" style="width: 100%;"></select></td>
+            <td class="border border-gray-300 text-center"><p class="section-name"></p><select id="${uniqueSectionSelectId}" name="select_section[]" style="width: 100%;"></select></td>
             <td class="border border-gray-300 text-center">${subjectDetails.units_lec}</td>
             <td class="border border-gray-300 text-center"">${subjectDetails.units_lab}</td>
-            <td class="border border-gray-300 text-center"">${subjectDetails.total_units}</td>
-            <td class="border border-gray-300 text-center""><!-- Day --></td>
-            <td class="border border-gray-300 text-center""><!-- Time --></td>
+            <td class="f2f-days-cell border border-gray-300 text-center""></td>
+            <td class="f2f-time-cell border border-gray-300 text-center""></td>
+            <td class="online-days-cell border border-gray-300 text-center""></td>
+            <td class="online-time-cell border border-gray-300 text-center""></td>
             <td class="border border-gray-300">
                 <button type="button" class="remove-subject bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition ease-in-out duration-150">Remove</button>
             </td>
@@ -114,11 +115,15 @@ $(document).ready(function() {
     function updateSelectedSubjects() {
         $("table tbody tr").each(function() {
             let subjectId = $(this).data('subjectId');
-            if (subjectId) {
-                selectedSubjects.push(subjectId);
+            let secSubId = $(this).find('input[type="hidden"][name="sec_sub_ids[]"]').val();
+            if (subjectId && secSubId) {
+                selectedSubjects.push({
+                    subject_id: subjectId,
+                    sec_sub_id: secSubId,
+                });
             }
         });
-        $('#selectedSubjectsInput').val(JSON.stringify(selectedSubjects.map(subject => subject.subject_id)));
+        $('#selectedSubjectsInput').val(JSON.stringify(selectedSubjects));
     }
 
     $('#stu_to_enroll').select2({
@@ -165,6 +170,39 @@ $(document).ready(function() {
         });
     });
 
+    function formatTime(startTime, endTime) {
+        function formatSingleTime(timeStr) {
+            let dateTime = new Date('1970-01-01T' + timeStr);
+            let options = { hour: 'numeric', minute: 'numeric', hour12: true };
+            return new Intl.DateTimeFormat('en-US', options).format(dateTime);
+        }
+
+        let formattedStartTime = formatSingleTime(startTime);
+        let formattedEndTime = formatSingleTime(endTime);
+
+        return formattedStartTime + ' - ' + formattedEndTime;
+    }
+
+    function formatDays(daysJson) {
+        const cleanedJson = daysJson.replace(/^"|"$/g, '').replace(/\\"/g, '"');
+        const daysArray = JSON.parse(cleanedJson);
+
+        const abbreviations = daysArray.map(day => {
+            switch(day) {
+                case 'Monday': return 'MON';
+                case 'Tuesday': return 'TUE';
+                case 'Wednesday': return 'WED';
+                case 'Thursday': return 'THU';
+                case 'Friday': return 'FRI';
+                case 'Saturday': return 'SAT';
+                case 'Sunday': return 'SUN';
+                default: return '';
+            }
+        });
+
+        return abbreviations.join(' ');
+    } 
+
     function initializeSectionSelect2(selector) {
         $(selector).select2({
             width: 'resolve',
@@ -190,15 +228,36 @@ $(document).ready(function() {
                         results: data.map(function(item) {
                             return {
                                 id: item.section_id,
-                                text: item.section_name
+                                text: item.section_name,
+                                customData: item
                             };
                         })
                     };
                 },
                 cache: true
             }
+        }).on("select2:select",function(e){
+            let selectedData = e.params.data.customData;
+            let f2fTimeSchedule = formatTime(selectedData.start_time_f2f, selectedData.end_time_f2f);
+            let onlineTimeSchedule = formatTime(selectedData.start_time_online, selectedData.end_time_online);
+            let formattedClassDaysF2F = formatDays(selectedData.class_days_f2f || '[]');
+            let formattedClassDaysOnline = formatDays(selectedData.class_days_online || '[]');    
+            let $row = $(this).closest('tr');
+            let hiddenInputForSecSubId = $("<input>").attr({
+                type: "hidden",
+                name: "sec_sub_ids[]", 
+                value: selectedData.sec_sub_id
+            });
+            $row.find('.f2f-time-cell').text(f2fTimeSchedule);
+            $row.find('.online-time-cell').text(onlineTimeSchedule);
+            $row.find('.f2f-days-cell').text(formattedClassDaysF2F);
+            $row.find('.online-days-cell').text(formattedClassDaysOnline);
+            $row.find('.section-name').text(selectedData.section_name);
+            $row.append(hiddenInputForSecSubId);
         });
     }
+
+    
 
     updateTotalUnits();
 });

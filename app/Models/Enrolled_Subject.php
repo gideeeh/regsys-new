@@ -16,7 +16,7 @@ class Enrolled_Subject extends Model
     protected $fillable = [
         'enrollment_id',
         'subject_id',
-        'sub_section_id',
+        'sec_sub_id',
         'final_grade',
     ];
 
@@ -27,7 +27,7 @@ class Enrolled_Subject extends Model
 
     public function sectionSubject()
     {
-        return $this->belongsTo(SectionSubject::class, 'section_id');
+        return $this->belongsTo(SectionSubject::class, 'sec_sub_id');
     }
 
     public function enrollment()

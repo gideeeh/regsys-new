@@ -1,14 +1,5 @@
 <div x-data="{ searchTerm: '{{ $searchTerm ?? '' }}', showModal: false, showMore: false, showNotesModal: false, showNoteForm: false }">
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center h-10">
-            <a href="{{ route('student-records') }}" class="font-semibold text-xl text-gray-800 leading-tight no-underline hover:underline">
-                {{ __('Student Records') }}
-            </a>
-            <x-search-form action="{{ route('student-records') }}" placeholder="Search Student" />
-        </div>
-    </x-slot>
-    
+<x-app-layout> 
     <div class="py-6 max-h-full">
         <div class="max-w-7xl py-6 mx-auto sm:px-6 lg:px-8" >
             <div class="flex bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
@@ -19,10 +10,16 @@
                         </div>
                         <div class="stu-details w-9/12">
                             <h1>{{$student->first_name}} {{$student->middle_name}} {{$student->last_name}} {{$student->suffix}}</h1>
+                            @isset($latestEnrollment)
                             <p>Student Number: {{ $student->student_number }}</p>
-                            <p>Course: {{ $latestEnrollment->latestEnrollment->program->program_code }}</p>
-                            <p>Year Level: {{ $latestEnrollment->latestEnrollment->year_level }}</p>
-                            <p>Scholarship: {{ $latestEnrollment->latestEnrollment->scholarship_type }}</p>
+                            @if($latestEnrollment->latestEnrollment) {{-- Checking if latestEnrollment is set --}}
+                                <p>Course: {{ $latestEnrollment->latestEnrollment->program->program_code }}</p>
+                                <p>Year Level: {{ $latestEnrollment->latestEnrollment->year_level }}</p>
+                                <p>Scholarship: {{ $latestEnrollment->latestEnrollment->scholarship_type }}</p>
+                            @else
+                                <p>Not Yet Enrolled</p>
+                            @endif
+                            @endisset
                             <a href="#" @click="showModal = true">Personal Information</a>
                             <div x-show="showModal" @click.away="showModal = false" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
                                 <div class="relative top-20 mx-auto p-5 border w-1/2 shadow-lg rounded-md bg-white">

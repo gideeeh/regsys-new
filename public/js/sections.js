@@ -122,11 +122,9 @@ $(document).ready(function() {
 
     function updateSectionButtonsError() {
         var container = $('#display-sections');
-        container.empty();
-        var notice = $('<div/>', {
-            text: 'No sections have been created for the selected academic year, term, and program.',
-            class: 'text-red-500'
-        });
+        container.empty(); 
+        var notice = $('<div/>').text('No sections have been created for the selected academic year, term, and program.');
+        notice.addClass('test-red');
         container.append(notice);
     }
 

@@ -259,4 +259,10 @@ h3 {
 #calendar {
     min-height: 100vh; /* Adjust as necessary */
   }
-[x-cloak] { display: none !important; }
+[x-cloak] { 
+    display: none !important; 
+}
+
+.test-red { 
+    color: red; 
+}

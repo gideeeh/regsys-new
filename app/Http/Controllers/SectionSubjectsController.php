@@ -47,7 +47,22 @@ class SectionSubjectsController extends Controller
     {
         $query = DB::table('section_subjects as ss')
             ->join('sections as s', 'ss.section_id', '=', 's.section_id')
-            ->select('s.section_id','s.section_name', 's.academic_year', 's.term', 'ss.subject_id', 's.year_level');
+            ->join('section_subject_schedules as sss', 'ss.id', '=', 'sss.sec_sub_id')
+            ->select(
+                's.section_id',
+                'ss.id as sec_sub_id',
+                's.section_name', 
+                's.academic_year', 
+                's.term', 
+                'ss.subject_id', 
+                's.year_level', 
+                'sss.class_days_f2f',
+                'sss.class_days_online',
+                'sss.start_time_f2f',
+                'sss.end_time_f2f',
+                'sss.start_time_online',
+                'sss.end_time_online',
+            );
     
         if ($request->filled('acad_year')) {
             $query->where('s.academic_year', $request->input('acad_year'));

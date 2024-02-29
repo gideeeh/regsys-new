@@ -22,11 +22,11 @@ class EnrolledSubjectsController extends Controller
 
         try {
             foreach ($selectedSubjects as $subject) {
-                if($subject)
-                {
+                if(isset($subject['subject_id']) && isset($subject['sec_sub_id'])) {
                     Enrolled_Subject::create([
                         'enrollment_id' => $enrollment_id,
-                        'subject_id' => $subject,
+                        'subject_id' => $subject['subject_id'],
+                        'sec_sub_id' => $subject['sec_sub_id'], 
                     ]);
                 }
             }

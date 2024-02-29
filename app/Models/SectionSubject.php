@@ -32,6 +32,6 @@ class SectionSubject extends Model
 
     public function enrolledSubject()
     {
-        return $this->hasOne(Enrolled_Subject::class, 'section_id');
+        return $this->hasOne(Enrolled_Subject::class, 'sec_sub_id');
     }
 }
