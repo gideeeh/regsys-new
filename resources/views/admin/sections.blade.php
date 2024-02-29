@@ -5,11 +5,11 @@
     <h3 class="flex w-full justify-center bg-sky-950 px-4 rounded-md text-white mb-6 border-b-4 border-amber-300">Sections and Schedules</h3>
     <!-- Section Metadata -->
     <!-- Info Based from Initial Data or from filterby data -->
-    <div class="flex w-full justify-between mb-12">
+    <div class="flex w-full justify-between mb-8">
         <div class="flex gap-36">
             <div class="">
                 <h3>Acad Year: <span class="font-medium" id="display_acad_year"></span></h3>
-                <h3>Program: <span class="font-medium" id="display_program"><!-- Program option based from Filterby --></span></h3>
+                <!-- <h3>Program: <span class="font-medium" id="display_program">Program option based from Filterby</span></h3> -->
             </div>
             <div class="">
                 <h3>Term: <span class="font-medium" id="display_term"></span></h3>
@@ -25,7 +25,7 @@
         </div>
     </div>
     <!-- Show available sections, swappable via button presses -->
-    <div id="display-sections" class="flex justify-start gap-4 mb-6">
+    <div id="display-sections" class="flex justify-start gap-4 mb-4">
     </div>
     <!-- Section creation -->
     <div class="w-full rounded-lg mb-4">
@@ -38,7 +38,7 @@
                     <th colspan="2" class="w-2/12 bg-sky-600 text-white p-2 border border-white border-r-0">Schedule(Online)</th>
                     <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Lecturer</th>    
                     <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Room</th>    
-                    <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Stu Count</th>    
+                    <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Max Pax</th>    
                     <th rowspan="2" class="w-1/12 bg-sky-600 text-white p-2 border border-white border-r-0">Action</th>
                 </tr>
                 <tr class="bg-gradient-to-r from-emerald-400 to-emerald-800 text-white">
@@ -50,20 +50,6 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td class="border border-gray-300">&nbsp;</td>
-                    <td>
-                        <!-- <div class="flex justify-start">
-                            <button @click="manageSchedule=true" class="bg-green-500 w-full text-white text-xs px-1 py-1 rounded hover:bg-green-600 transition ease-in-out duration-150">Manage</button>
-                        </div> -->
-                    </td>
                 </tr>
             </tbody>
         </table>
@@ -206,19 +192,19 @@
                             <div class="w-1/2 pl-4">
                                 <div>
                                     <label class="flex items-center space-x-3">
-                                        <input type="checkbox" name="f2f_days[]" value="Wednesday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                        <input type="checkbox" name="f2f_days[]" value="Thursday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                         <span class="text-gray-700">Thursday</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="flex items-center space-x-3">
-                                        <input type="checkbox" name="f2f_days[]" value="Wednesday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                        <input type="checkbox" name="f2f_days[]" value="Friday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                         <span class="text-gray-700">Friday</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="flex items-center space-x-3">
-                                        <input type="checkbox" name="f2f_days[]" value="Wednesday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                        <input type="checkbox" name="f2f_days[]" value="Saturday" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                         <span class="text-gray-700">Saturday</span>
                                     </label>
                                 </div>
@@ -238,7 +224,7 @@
                 </div>
                 <!-- Online Class Schedule -->
                 <div class="cursor-default w-full acad-year-card border-solid border-2 border-slate-400 rounded-md px-4 py-4 mb-6 mr-12 hover:border-sky-950">
-                    <label class="block text-md font-semibold mb-2">F2F Class Schedule</label>
+                    <label class="block text-md font-semibold mb-2">Online Class Schedule</label>
                     <fieldset class="mb-4"> 
                         <legend class="text-base font-medium text-gray-900 mb-2">Day(s)</legend>
                         <div class="flex justify-content items-center">
@@ -311,7 +297,7 @@
                     <input type="number" id="class_limit" name="class_limit" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                 </div>
                 <div class="flex justify-end space-x-4 pt-6">
-                    <button type="button" @click="manageSchedule = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Cancel</button>
+                    <button type="button" @click="manageSchedule = false" class="hide-manage bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Cancel</button>
                     <button class="assign_section bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition ease-in-out duration-150">Confirm</button>
                 </div>
             </form>
@@ -322,6 +308,7 @@
 <script>
     var sectionsUrl = '/sections/fetch';
     var facultyUrl = '/admin/functions/get-faculty';
+    var searchFacultyUrl = '/admin/functions/faculty/search';
     // var programSubjectsUrl = '/admin/functions/get-program-subjects/';
     var programSubjectsUrl = "{{ route('program-subjects.json') }}";
     var fetchSectionSchedule = '/admin/functions/fetch-schedule';

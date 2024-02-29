@@ -31,6 +31,7 @@ class SubjectController extends Controller
                                 'prerequisite_2 as prerequisite_2',
                                 'prerequisite_3 as prerequisite_3',
                             ]);
+        
         return response()->json($subjects);
     }
 }

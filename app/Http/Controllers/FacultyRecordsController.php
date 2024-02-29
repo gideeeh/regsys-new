@@ -57,4 +57,19 @@ class FacultyRecordsController extends Controller
             'school_email' => $professor->school_email,
         ]);
     }
+
+    public function searchFaculty(Request $request)
+    {
+        $searchTerm = $request->input('q');
+
+        // Fetch and filter faculty based on the search term
+        $professors = Professor::where('first_name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('last_name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('prof_id', 'LIKE', "%{$searchTerm}%")
+                    ->get([
+                        'prof_id', 'first_name', 'middle_name', 'last_name', 'suffix'
+                    ]);
+
+        return response()->json($professors);
+    }
 }

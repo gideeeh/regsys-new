@@ -16,7 +16,7 @@ class Enrolled_Subject extends Model
     protected $fillable = [
         'enrollment_id',
         'subject_id',
-        'section_id',
+        'sub_section_id',
         'final_grade',
     ];
 

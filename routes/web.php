@@ -129,6 +129,7 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/program/{program_id}/subjects/{year}/{term}', [ProgramSubjectController::class, 'fetchSubjects'])->name('fetch.subjects');
     Route::get('/sections/fetch', [SectionController::class,'fetchSections'])->name('fetch.sections');
     Route::get('/admin/functions/get-faculty', [FacultyRecordsController::class, 'faculty_json'])->name('faculty_json');
+    Route::get('/admin/functions/faculty/search', [FacultyRecordsController::class, 'searchFaculty'])->name('faculty.search');
     Route::get('/admin/functions/get-faculty/{prof_id}', [FacultyRecordsController::class, 'fetch_faculty_json'])->name('faculty_json.fetch');
     Route::get('/admin/functions/get-schedules', [SectionSubjectSchedulesController::class, 'sec_sub_schedule_json'])->name('sec_sub_schedule_json');
     Route::get('/admin/functions/fetch-schedule', [SectionSubjectSchedulesController::class, 'fetchScheduleDetailsForSectionAndSubject'])->name('sec_sub_schedule.fetch');

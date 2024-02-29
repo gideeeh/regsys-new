@@ -12,6 +12,34 @@ $(document).ready(function() {
         updateSelectedSubjects();
         logCurrentInputs();
     });
+
+    $('#select_section').select2({
+        width: 'resolve',
+        placeholder: "Select Section",
+        allowClear: true,
+        minimumInputLength: 0,
+        ajax: {
+            url: getSubjectsUrl, /* Still to change */
+            datatype: 'json',
+            delay: 0,
+            processResults: function (data) {
+                return {
+                    results: data.map(function (item) {
+                        return {
+                            id: item.subject_id,
+                            text: item.subject_code,
+                            subject_code: item.subject_code,
+                            subject_name: item.subject_name,
+                            units_lec: item.units_lec,
+                            units_lab: item.units_lab,
+                            total_units: item.units_lec + item.units_lab
+                        };
+                    })
+                };
+            },
+        }
+    });
+
     $('#enroll_subjects').select2({
         width: 'resolve',
         placeholder: "Select Subject to Enroll",

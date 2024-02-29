@@ -115,6 +115,7 @@ class ProgramSubjectController extends Controller
         return response()->json($subjects);
     }
     
+    
     public function program_subjects_json() {
         $program_subjects = Program_Subject::all();
 
