@@ -3,6 +3,7 @@
 use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\CourseListingsController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EnrolledSubjectsController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\RegistrarFunctionsController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SectionSubjectSchedulesController;
 use App\Http\Controllers\SectionSubjectsController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\StudentNoteController;
 use App\Http\Controllers\StudentRecordsController;
 use App\Http\Controllers\SubjectCatalogController;
@@ -56,6 +58,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+    /* Appointments */
+    Route::get('/appointments', function(){return view('user.appointments');})->name('user.appointments');
+    Route::post('/appointments/create-appointment', [AppointmentsController::class, 'request_appointment'])->name('appointments.request');
+    /* Public Json */
+    Route::get('/public/api/get_services', [ServicesController::class, 'all_services_json'])->name('all_services_json');
 });
 
 /* Admin Middleware */
@@ -116,6 +123,12 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::post('/admin/functions/program-course-management/sections/create',[SectionController::class, 'store'])->name('section.create');
 /* Sections, Section Subjects */
     Route::post('/admin/functions/sections/assign-schedule',[SectionSubjectsController::class, 'store'])->name('section-subject.store');
+/* Appointments */
+    Route::get('admin/appointments/dashboard', [AppointmentsController::class, 'index'])->name('appointments.dashboard');
+    Route::get('admin/appointments/services', [ServicesController::class, 'index'])->name('appointments.services');
+    Route::post('admin/appointments/services/create', [ServicesController::class, 'store'])->name('appointments.create');
+    Route::patch('admin/appointments/services/update/{service_id}', [ServicesController::class, 'update'])->name('appointments.update');
+    Route::delete('admin/appointments/services/delete/{service_id}', [ServicesController::class, 'delete'])->name('appointments.delete');
 /* Local APIs */
     Route::get('/admin/students/get-students/', [StudentRecordsController::class, 'student_json'])->name('students.json');
     Route::get('/admin/students/get-students/{student_id}', [StudentRecordsController::class, 'fetch_student_json'])->name('students.fetch');
@@ -134,7 +147,6 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/admin/functions/get-schedules', [SectionSubjectSchedulesController::class, 'sec_sub_schedule_json'])->name('sec_sub_schedule_json');
     Route::get('/admin/functions/fetch-schedule', [SectionSubjectSchedulesController::class, 'fetchScheduleDetailsForSectionAndSubject'])->name('sec_sub_schedule.fetch');
     Route::get('/admin/functions/get-section-subjects', [SectionSubjectsController::class, 'search'])->name('sec_sub.search');
-    Route::get('admin/appointments/dashboard', function() {return view('admin.appointments-dashboard');})->name('appointments.dashboard');
 });
 
 require __DIR__.'/auth.php';

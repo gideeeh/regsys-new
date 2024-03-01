@@ -21,4 +21,35 @@ $(document).ready(function() {
             cache: true
         }
     });
+
+    $('#request-service').select2({
+        width: 'resolve',
+        placeholder: 'Select Service',
+        allowClear: true,
+        minimumInputLength: 0,
+        ajax: {
+            url: servicesUrl,
+            dataType: 'json',
+            delay: 20,
+            processResults: function (data) {
+                return {
+                    results: data.map(function(item) {
+                        return {
+                            id: item.id,
+                            text: item.service_name
+                        };
+                    })
+                };
+            },
+            cache: true
+        }
+    }).on("select2:select", function(e) {
+        let serviceData = e.params.data.id;
+        $("#request-service").val(serviceData);
+        console.log(`${serviceData}`);
+    });
+
+    $('#hello').on('click', function() {
+        alert("Hello");
+    });
 });
