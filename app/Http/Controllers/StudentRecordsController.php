@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use PHPUnit\Framework\MockObject\Builder\Stub;
 
@@ -152,13 +153,6 @@ class StudentRecordsController extends Controller
 
     public function store(Request $request)
     {
-        $validatedUser = $request->validate([
-            // Validate fields relevant to the User model
-            'email' => 'required|email|unique:users,email',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-         ]);
-         
         $validated = $request->validate([
            'student_number' => 'required|unique:students,student_number',
            'first_name' => 'required',
@@ -166,14 +160,6 @@ class StudentRecordsController extends Controller
            'personal_email' => 'required|unique:students,personal_email',
         ]);
 
-        $new_account = new User($validated);
-        $new_account->first_name = $request->first_name;
-        $new_account->last_name = $request->last_name;
-        $new_account->email = $request->personal_email;
-        $new_account->student_number = $request->student_number; 
-        $new_account->role = 'student'; 
-        $new_account->password = $request->student_number;
-        $new_account->save();
 
         $isTransferee = $request->has('is_transferee') ? true : false;
         $isIrregular = $request->has('is_irregular') ? true : false;
@@ -210,6 +196,16 @@ class StudentRecordsController extends Controller
         $new_student->is_transferee = $isTransferee;
         $new_student->is_irregular = $isIrregular;
         $new_student->save();
+
+        $user = User::create([
+            'email' => $validated['personal_email'],
+            'password' => Hash::make('55Changemenow99'),
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'role' => 'user',
+        ]);
+
+        $new_student->update(['user_id' => $user->id]);
 
         return redirect()->back()->with('success', 'Student added successfully!');
     }

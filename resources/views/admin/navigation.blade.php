@@ -86,7 +86,7 @@
                             </x-dropdown-link>
                         </div>
                     </div>
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    <x-nav-link :href="route('appointments.dashboard')" :active="request()->routeIs('appointments.dashboard')">
                         {{ __('Student Appointments') }}
                     </x-nav-link>
                 </div>

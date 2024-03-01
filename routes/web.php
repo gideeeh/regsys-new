@@ -134,6 +134,7 @@ Route::middleware(['auth','isAdminUser'])->group(function() {
     Route::get('/admin/functions/get-schedules', [SectionSubjectSchedulesController::class, 'sec_sub_schedule_json'])->name('sec_sub_schedule_json');
     Route::get('/admin/functions/fetch-schedule', [SectionSubjectSchedulesController::class, 'fetchScheduleDetailsForSectionAndSubject'])->name('sec_sub_schedule.fetch');
     Route::get('/admin/functions/get-section-subjects', [SectionSubjectsController::class, 'search'])->name('sec_sub.search');
+    Route::get('admin/appointments/dashboard', function() {return view('admin.appointments-dashboard');})->name('appointments.dashboard');
 });
 
 require __DIR__.'/auth.php';

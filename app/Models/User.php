@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'student_id',
     ];
 
     protected $attributes = [
@@ -60,8 +61,8 @@ class User extends Authenticatable
         });
     }
     
-    public function students()
+    public function student()
     {
-        return $this->hasOne(Student::class, 'user_id');
+        return $this->hasOne(Student::class);
     }
 }

@@ -65,11 +65,6 @@ class Student extends Model
         return $this->hasMany(Enrollment::class, 'student_id');
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
     public function latestEnrollment()
     {
         return $this->hasOne(Enrollment::class, 'student_id')->latest();
@@ -78,5 +73,10 @@ class Student extends Model
     public function notes()
     {
         return $this->hasMany(StudentNote::class, 'student_id')->orderByDesc('created_at');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
