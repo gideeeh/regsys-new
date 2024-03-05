@@ -27,6 +27,6 @@ class Appointment extends Model
     // Relationship to a service
     public function service()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }

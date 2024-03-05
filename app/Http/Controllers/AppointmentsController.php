@@ -39,4 +39,59 @@ class AppointmentsController extends Controller
         return redirect()->back()->with('success', 'Request sent! Please wait for a response from the registrar.');
 
     }
+
+    public function getUserAppointments(Request $request)
+{
+    $userId = Auth::id();
+
+    $appointments = Appointment::join('services', 'appointments.service_id', '=', 'services.id')
+                        ->where('appointments.user_id', $userId)
+                        ->where('appointments.status', '!=', 'complete')
+                        ->get([
+                            'appointments.user_id',
+                            'services.service_name', 
+                            'appointments.status',
+                            'appointments.viewed_date',
+                            'appointments.complete_date',
+                        ])
+                        ->map(function ($appointment) {
+                            return [
+                                'user_id' => $appointment->user_id,
+                                'service_name' => $appointment->service_name, 
+                                'status' => $appointment->status,
+                                'viewed_date' => $appointment->viewed_date,
+                                'complete_date' => $appointment->complete_date,
+                            ];
+                        });
+
+    return response()->json($appointments);
+}
+
+public function getUserCompletedAppointments(Request $request)
+{
+    $userId = Auth::id();
+
+    $appointments = Appointment::join('services', 'appointments.service_id', '=', 'services.id')
+                        ->where('appointments.user_id', $userId)
+                        ->where('appointments.status', '=', 'complete')
+                        ->get([
+                            'appointments.user_id',
+                            'services.service_name', 
+                            'appointments.status',
+                            'appointments.viewed_date',
+                            'appointments.complete_date',
+                        ])
+                        ->map(function ($appointment) {
+                            return [
+                                'user_id' => $appointment->user_id,
+                                'service_name' => $appointment->service_name, 
+                                'status' => $appointment->status,
+                                'viewed_date' => $appointment->viewed_date,
+                                'complete_date' => $appointment->complete_date,
+                            ];
+                        });
+
+    return response()->json($appointments);
+}
+
 }

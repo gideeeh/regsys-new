@@ -14,8 +14,8 @@
             <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg sm:min-h-[49vh] md:min-h-[55vh] lg:min-h-[61vh] xl:min-h-[67vh]">
                 <div class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
                     <h3>Registrar Request History</h3>
-                    <button class="bg-red-500 text-white text-md px-2 py-2 rounded hover:bg-red-600 transition ease-in-out duration-150">Pending</button>
-                    <button class="bg-gray-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Completed</button>
+                    <button id="btnPending" class="bg-red-500 text-white text-md px-2 py-2 rounded hover:bg-red-600 transition ease-in-out duration-150">Pending</button>
+                    <button id="btnCompleted" class="bg-gray-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition ease-in-out duration-150">Completed</button>
                 </div>
                 <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative rounded-lg">
                     <thead>
@@ -70,6 +70,8 @@
 </div>
 <script>
     var servicesUrl = "{{url('/public/api/get_services')}}";
+    var appointmentsPending = "{{url('/user/pending-requests')}}";
+    var appointmentsComplete = "{{url('/user/complete-requests')}}";
     var getStudentsUrl;
     console.log(servicesUrl)
 </script>

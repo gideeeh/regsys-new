@@ -4,7 +4,9 @@ use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CourseListingsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EnrolledSubjectsController;
 use App\Http\Controllers\EnrollmentsController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProgramSubjectController;
 use App\Http\Controllers\RegistrarFunctionsController;
+use App\Http\Controllers\ScrapingController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SectionSubjectSchedulesController;
 use App\Http\Controllers\SectionSubjectsController;
@@ -63,11 +66,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/appointments/create-appointment', [AppointmentsController::class, 'request_appointment'])->name('appointments.request');
     /* Public Json */
     Route::get('/public/api/get_services', [ServicesController::class, 'all_services_json'])->name('all_services_json');
+    Route::get('/user/pending-requests', [AppointmentsController::class, 'getUserAppointments'])->name('user.pending-requests');
+    Route::get('/user/complete-requests', [AppointmentsController::class, 'getUserCompletedAppointments'])->name('user.complete-requests');
 });
 
 /* Admin Middleware */
 Route::middleware(['auth','isAdminUser'])->group(function() {
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    // Route::get('/admin/dashboard', [ChartController::class, 'barChart']);
+        Route::get('/admin/dashboard/get-articles', [DashboardController::class, 'scrapedNews'])->name('scraped-news.json');
+        Route::get('/admin/dashboard/get-active-classes', [DashboardController::class, 'getActiveClasses'])->name('active-classes.json');
+        Route::get('/admin/dashboard/get-calendar-events', [DashboardController::class, 'calendarEvents'])->name('calendar-events.json');
+
+
 /* Student Records */
     Route::get('/admin/student-records', [StudentRecordsController::class, 'index'])->name('student-records');
     Route::get('/admin/student-records/{student}', [StudentRecordsController::class, 'show'])->name('student-records.show');
